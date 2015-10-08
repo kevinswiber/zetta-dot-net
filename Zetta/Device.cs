@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Zetta
-{
+namespace Zetta {
 	public abstract class Device {
 		public string id;
 		public string state;

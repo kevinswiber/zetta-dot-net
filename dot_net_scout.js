@@ -15,7 +15,7 @@ DotNetScout.prototype.init = function(next) {
   var options = {
     server: {
       find: function(payload, callback) {
-        self.server.find(payload.query, function(err, results) {
+        self.server.find(payload, function(err, results) {
           if (err) {
             callback(err);
             return;

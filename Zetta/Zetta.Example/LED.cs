@@ -1,12 +1,11 @@
 ﻿using System;
+using Zetta;
 
-namespace Zetta.Example
-{
-	public class Display : Device {
-		public string message;
-		public readonly string type = "display";
+namespace Zetta.Example {
+	public class LED : Device {
+		public readonly string type = "led";
 
-		public Display() {
+		public LED() {
 			this.allowed.Add("on", new string[] { "turn-off" });
 			this.allowed.Add("off", new string[] { "turn-on" });
 

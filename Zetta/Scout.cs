@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Zetta
-{
+namespace Zetta {
 	public abstract class Scout {
 		public Server server;
 		public Func<object, Task<object>> discover;
 		public Func<object, Task<object>> provision;
-		public abstract Task<object> init(dynamic input);
+		public abstract Task<object> Initialize(dynamic input);
 
 		public async Task Provision<T>(T device) where T : Device {
 			Wrap(device);
