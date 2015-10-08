@@ -6,7 +6,7 @@ namespace Zetta {
         private Func<object, Task<object>> _discover;
         private Func<object, Task<object>> _provision;
 
-        public abstract Task<object> Initialize(dynamic input);
+        public abstract Task Initialize();
 
         public async Task Provision<T>(T device) where T : Device {
             await _provision(Interop.Wrap(device));

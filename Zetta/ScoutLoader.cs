@@ -25,7 +25,7 @@ namespace Zetta {
 
             scout.Server = _server;
 
-            await scout.Initialize(_input);
+            await scout.Initialize();
 
             return this;
         }

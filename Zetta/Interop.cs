@@ -17,12 +17,12 @@ namespace Zetta {
             interop.Allowed = device._allowed;
             interop.Transitions = device._transitions;
             interop.OnUpdate = async (dynamic input) => {
-                device.update = (Func<object, Task<object>>)input;
+                device.SetUpdateFunction((Func<object, Task<object>>)input);
                 return Wrap(device);
             };
 
             interop.OnSave = async (dynamic input) => {
-                device.save = (Func<object, Task<object>>)input;
+                device.SetSaveFunction((Func<object, Task<object>>)input);
                 return Wrap(device);
             };
 

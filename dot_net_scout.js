@@ -21,7 +21,7 @@ DotNetScout.prototype.init = function(next) {
             return;
           } 
 
-          callback(null, results);
+          callback(null, JSON.stringify(results));
         });
       },
       observe: function(payload, callback) {

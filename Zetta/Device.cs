@@ -9,25 +9,11 @@ namespace Zetta {
         public IDictionary<string, string[]> _allowed = new Dictionary<string, string[]>();
         public IDictionary<string, TransitionValue> _transitions = new Dictionary<string, TransitionValue>();
 
-        public Func<object, Task<object>> fetch;
-        public Func<object, Task<object>> update;
-        public Func<object, Task<object>> save;
-
-        public Func<object, Task<object>> OnUpdate;
-        public Func<object, Task<object>> OnSave;
+        private Func<object, Task<object>> _update;
+        private Func<object, Task<object>> _save;
 
         protected Device When(string state, string[] allow) {
             _allowed.Add(state, allow);
-            return this;
-        }
-
-        protected Device SetType(string type) {
-            Type = type;
-            return this;
-        }
-
-        protected Device SetState(string state) {
-            State = state;
             return this;
         }
 
@@ -41,9 +27,20 @@ namespace Zetta {
             return this;
         }
 
+        public async Task Update() {
+            await this._update(Interop.Wrap(this));
+        }
+
         public async Task Save() {
-            await this.save(Interop.Wrap(this));
-            return;
+            await this._save(Interop.Wrap(this));
+        }
+
+        public void SetUpdateFunction(Func<object, Task<object>> function) {
+            _update = function;
+        }
+
+        public void SetSaveFunction(Func<object, Task<object>> function) {
+            _save = function;
         }
 
         [JsonProperty]
