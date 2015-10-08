@@ -28,14 +28,33 @@ DotNetScout.prototype.init = function(next) {
       }
     },
     discover: function(payload, callback) {
-      console.log(payload);
-      self.discover(DotNetDevice, payload);
+      var machine = self.discover(DotNetDevice, payload);
+
+      payload.OnUpdate(function(result, callback2) {
+        var reserved = ['allowed', 'transitions', 'id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+        Object.keys(result).forEach(function(key) {
+          if (reserved.indexOf(key) === -1)  {
+            machine[key] = result[key];
+          }
+        });
+
+        callback2();
+      });
+
+      payload.OnSave(function(result, callback2) {
+        var reserved = ['allowed', 'transitions', 'id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+        Object.keys(result).forEach(function(key) {
+          if (reserved.indexOf(key) === -1)  {
+            machine[key] = result[key];
+          }
+        });
+
+        machine.save(callback2);
+      });
+
       callback();
     },
     provision: function(payload, callback) {
-      console.log('provision');
-      console.log(payload);
-
       var machine = self.provision(payload, DotNetDevice, payload);
 
       payload.OnUpdate(function(result, callback2) {
