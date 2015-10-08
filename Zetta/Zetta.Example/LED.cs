@@ -3,27 +3,24 @@ using Zetta;
 
 namespace Zetta.Example {
 	public class LED : Device {
-		public readonly string type = "led";
-
 		public LED() {
-			this.allowed.Add("on", new string[] { "turn-off" });
-			this.allowed.Add("off", new string[] { "turn-on" });
+			Type = "led";
+			State = "off";
 
-			this.transitions.Add("turn-on", async (input) => {
-				this.state = "on";
+			When("on", allow: new string[] { "turn-off" });
+			When("off", allow: new string[] { "turn-on" });
 
+			Map("turn-on", async (input) => {
+				State = "on";
 				await this.Save();
 				return this;
 			});
 
-			this.transitions.Add("turn-off", async (input) => {
-				this.state = "off";
-
+			Map("turn-off", async (input) => {
+				State = "off";
 				await this.Save();
 				return this;
 			});
-
-			this.state = "off";
 		}
 	}
 }

@@ -3,19 +3,27 @@ using System.Threading.Tasks;
 
 namespace Zetta {
 	public abstract class Scout {
-		public Server server;
-		public Func<object, Task<object>> discover;
-		public Func<object, Task<object>> provision;
+		public Func<object, Task<object>> _discover;
+		public Func<object, Task<object>> _provision;
+
 		public abstract Task<object> Initialize(dynamic input);
 
 		public async Task Provision<T>(T device) where T : Device {
 			Wrap(device);
-			await this.provision(device);
+			await _provision(device);
 		}
 
 		public async Task Discover<T>(T device) where T : Device {
 			Wrap(device);
-			await this.discover(device);
+			await _discover(device);
+		}
+
+		public void SetProvisionFunction(Func<object, Task<object>> provision) {
+			_provision = provision;
+		}
+
+		public void SetDiscoverFunction(Func<object, Task<object>> discover) {
+			_discover = discover;
 		}
 
 		private void Wrap<T>(T device) where T : Device {
@@ -33,6 +41,8 @@ namespace Zetta {
 				return device;
 			};
 		}
+
+		public Server Server { get; set; }
 	}
 }
 

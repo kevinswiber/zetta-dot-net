@@ -7,19 +7,19 @@ using Zetta;
 namespace Zetta.Example {
 	public class LEDScout : Scout {
 		public override async Task<object> Initialize(dynamic input) {
-			var results = await this.server.Find("where type=\"led\"");
+			var results = await Server.Find("where type=\"led\"");
 
 			if (results.Length > 0) {
 				var first = results.First() as IDictionary<string, object>;
 				var led = new LED();
 
-				led.id = first.ContainsKey("id") ? (string)first["id"] : null;
-				led.state = first.ContainsKey("state") ? (string)first["state"] : null;
+				led.Id = first.ContainsKey("id") ? (string)first["id"] : null;
+				led.State = first.ContainsKey("state") ? (string)first["state"] : null;
 
-				await this.Provision(led);
+				await Provision(led);
 			} else {
 				var led = new LED();
-				await this.Discover(led);
+				await Discover(led);
 			}
 
 			return this;

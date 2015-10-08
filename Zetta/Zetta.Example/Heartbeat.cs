@@ -4,12 +4,13 @@ using Zetta;
 
 namespace Zetta.Example {
 	public class Heartbeat : Device {
-		public readonly string type = "heartbeat";
-		public int pulse = 0;
 
 		public Heartbeat() {
-
+			Type = "heartbeat";
+			Pulse = 0;
 		}
+
+		public int Pulse { get; set; }
 	}
 }
 

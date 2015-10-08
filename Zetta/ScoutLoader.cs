@@ -11,12 +11,14 @@ namespace Zetta {
 
 		public async Task<ScoutLoader> Use<T>(T scout) where T : Scout {
 			var server = new Server();
-			server.find = (Func<object, Task<object>>)input.server.find;
-			server.observe = (Func<object, Task<object>>)input.server.observe;
 
-			scout.discover = (Func<object, Task<object>>)input.discover;
-			scout.provision = (Func<object, Task<object>>)input.provision;
-			scout.server = server;
+			server.SetFindFunction((Func<object, Task<object>>)input.server.find);
+			server.SetObserveFunction((Func<object, Task<object>>)input.server.observe);
+
+			scout.SetDiscoverFunction((Func<object, Task<object>>)input.discover);
+			scout.SetProvisionFunction((Func<object, Task<object>>)input.provision);
+
+			scout.Server = server;
 
 			await scout.Initialize(this.input);
 

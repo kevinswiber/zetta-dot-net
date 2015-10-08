@@ -7,19 +7,19 @@ using Zetta;
 namespace Zetta.Example {
 	public class HeartbeatScout : Scout {
 		public override async Task<object> Initialize(dynamic input) {
-			var results = await this.server.Find("where type=\"heartbeat\"");
+			var results = await Server.Find("where type=\"heartbeat\"");
 
 			if (results.Length > 0) {
 				var first = results.First() as IDictionary<string, object>;
 				var heartbeat = new Heartbeat();
 
-				heartbeat.id = first.ContainsKey("id") ? (string)first["id"] : null;
-				heartbeat.pulse = first.ContainsKey("pulse") ? (int)first["pulse"] : 0;
+				heartbeat.Id = first.ContainsKey("id") ? (string)first["id"] : null;
+				heartbeat.Pulse = first.ContainsKey("pulse") ? (int)first["pulse"] : 0;
 
-				await this.Provision(heartbeat);
+				await Provision(heartbeat);
 			} else {
 				var heartbeat = new Heartbeat();
-				await this.Discover(heartbeat);
+				await Discover(heartbeat);
 			}
 
 			return this;

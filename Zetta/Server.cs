@@ -3,11 +3,19 @@ using System.Threading.Tasks;
 
 namespace Zetta {
 	public class Server {
-		public Func<object, Task<object>> find;
-		public Func<object, Task<object>> observe;
+		public Func<object, Task<object>> _find;
+		public Func<object, Task<object>> _observe;
+
+		public void SetFindFunction(Func<object, Task<object>> find) {
+			_find = find;
+		}
+
+		public void SetObserveFunction(Func<object, Task<object>> observe) {
+			_observe = observe;
+		}
 
 		public async Task<dynamic[]> Find(string query) {
-			return (dynamic[])await find(query);
+			return (dynamic[])await _find(query);
 		}
 	}
 }
