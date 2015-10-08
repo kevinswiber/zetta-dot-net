@@ -28,10 +28,35 @@ DotNetScout.prototype.init = function(next) {
       }
     },
     discover: function(payload, callback) {
+      payload.type = payload.Type;
+      payload.state = payload.State;
+      payload.id = payload.Id;
+      payload.name = payload.Name;
+      delete payload.Type;
+      delete payload.State;
+      delete payload.Id;
+      delete payload.Name;
+
       var machine = self.discover(DotNetDevice, payload);
 
+      var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+      Object.keys(payload).forEach(function(key) {
+        if (reserved.indexOf(key) === -1)  {
+          machine[key] = payload[key];
+        }
+      });
+
       payload.OnUpdate(function(result, callback2) {
-        var reserved = ['_allowed', '_transitions', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+        result.type = result.Type;
+        result.state = result.State;
+        result.id = result.Id;
+        result.name = result.Name;
+        delete result.Type;
+        delete result.State;
+        delete result.Id;
+        delete result.Name;
+
+        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
         Object.keys(result).forEach(function(key) {
           if (reserved.indexOf(key) === -1)  {
             machine[key] = result[key];
@@ -42,7 +67,16 @@ DotNetScout.prototype.init = function(next) {
       });
 
       payload.OnSave(function(result, callback2) {
-        var reserved = ['_allowed', '_transitions', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+        result.type = result.Type;
+        result.state = result.State;
+        result.id = result.Id;
+        result.name = result.Name;
+        delete result.Type;
+        delete result.State;
+        delete result.Id;
+        delete result.Name;
+
+        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
         Object.keys(result).forEach(function(key) {
           if (reserved.indexOf(key) === -1)  {
             machine[key] = result[key];
@@ -55,11 +89,35 @@ DotNetScout.prototype.init = function(next) {
       callback();
     },
     provision: function(payload, callback) {
+      payload.type = payload.Type;
+      payload.state = payload.State;
       payload.id = payload.Id;
-      var machine = self.provision(payload, DotNetDevice, payload);
+      payload.name = payload.Name;
+      delete payload.Type;
+      delete payload.State;
+      delete payload.Id;
+      delete payload.Name;
+
+      var machine = self.provision({ id: payload.id, name: payload.name }, DotNetDevice, payload);
+
+      var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+      Object.keys(payload).forEach(function(key) {
+        if (reserved.indexOf(key) === -1)  {
+          machine[key] = payload[key];
+        }
+      });
 
       payload.OnUpdate(function(result, callback2) {
-        var reserved = ['_allowed', '_transitions', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+        result.type = result.Type;
+        result.state = result.State;
+        result.id = result.Id;
+        result.name = result.Name;
+        delete result.Type;
+        delete result.State;
+        delete result.Id;
+        delete result.Name;
+
+        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
         Object.keys(result).forEach(function(key) {
           if (reserved.indexOf(key) === -1)  {
             machine[key] = result[key];
@@ -70,7 +128,16 @@ DotNetScout.prototype.init = function(next) {
       });
 
       payload.OnSave(function(result, callback2) {
-        var reserved = ['_allowed', '_transitions', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
+        result.type = result.Type;
+        result.state = result.State;
+        result.id = result.Id;
+        result.name = result.Name;
+        delete result.Type;
+        delete result.State;
+        delete result.Id;
+        delete result.Name;
+
+        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
         Object.keys(result).forEach(function(key) {
           if (reserved.indexOf(key) === -1)  {
             machine[key] = result[key];
