@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Zetta {
 	public class Server {
-		public Func<object, Task<object>> _find;
-		public Func<object, Task<object>> _observe;
+		private Func<object, Task<object>> _find;
+		private Func<object, Task<object>> _observe;
 
 		public void SetFindFunction(Func<object, Task<object>> find) {
 			_find = find;

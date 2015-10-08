@@ -13,13 +13,11 @@ namespace Zetta.Example {
 			Map("turn-on", async (input) => {
 				State = "on";
 				await this.Save();
-				return this;
 			});
 
 			Map("turn-off", async (input) => {
 				State = "off";
 				await this.Save();
-				return this;
 			});
 		}
 	}

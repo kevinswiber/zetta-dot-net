@@ -40,6 +40,8 @@
     <Compile Include="Scout.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="ScoutLoader.cs" />
+    <Compile Include="TransitionValue.cs" />
+    <Compile Include="Interop.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

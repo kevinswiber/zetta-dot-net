@@ -28,120 +28,71 @@ DotNetScout.prototype.init = function(next) {
       }
     },
     discover: function(payload, callback) {
-      payload.type = payload.Type;
-      payload.state = payload.State;
-      payload.id = payload.Id;
-      payload.name = payload.Name;
-      delete payload.Type;
-      delete payload.State;
-      delete payload.Id;
-      delete payload.Name;
+      payload.properties = JSON.parse(payload.Properties);
+      if (payload.properties.name === null) {
+        delete payload.properties.name;
+      }
+      if (payload.properties.id === null) {
+        delete payload.properties.id;
+      }
 
       var machine = self.discover(DotNetDevice, payload);
 
-      var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
-      Object.keys(payload).forEach(function(key) {
-        if (reserved.indexOf(key) === -1)  {
-          machine[key] = payload[key];
-        }
+      Object.keys(payload.properties).forEach(function(key) {
+        machine[key] = payload.properties[key];
       });
 
       payload.OnUpdate(function(result, callback2) {
-        result.type = result.Type;
-        result.state = result.State;
-        result.id = result.Id;
-        result.name = result.Name;
-        delete result.Type;
-        delete result.State;
-        delete result.Id;
-        delete result.Name;
-
-        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
-        Object.keys(result).forEach(function(key) {
-          if (reserved.indexOf(key) === -1)  {
-            machine[key] = result[key];
-          }
+        result.properties = JSON.parse(result.Properties);
+        Object.keys(result.properties).forEach(function(key) {
+          machine[key] = result[key];
         });
 
         callback2();
       });
 
       payload.OnSave(function(result, callback2) {
-        result.type = result.Type;
-        result.state = result.State;
-        result.id = result.Id;
-        result.name = result.Name;
-        delete result.Type;
-        delete result.State;
-        delete result.Id;
-        delete result.Name;
+        result.properties = JSON.parse(result.Properties);
 
-        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
-        Object.keys(result).forEach(function(key) {
-          if (reserved.indexOf(key) === -1)  {
-            machine[key] = result[key];
-          }
+        Object.keys(result.properties).forEach(function(key) {
+          machine[key] = result.properties[key];
         });
 
         machine.save(callback2);
       });
 
-      callback();
+      payload.SetId(machine.id, callback);
     },
     provision: function(payload, callback) {
-      payload.type = payload.Type;
-      payload.state = payload.State;
-      payload.id = payload.Id;
-      payload.name = payload.Name;
-      delete payload.Type;
-      delete payload.State;
-      delete payload.Id;
-      delete payload.Name;
+      payload.properties = JSON.parse(payload.Properties);
+      if (payload.properties.name === null) {
+        delete payload.properties.name;
+      }
+      if (payload.properties.id === null) {
+        delete payload.properties.id;
+      }
 
-      var machine = self.provision({ id: payload.id, name: payload.name }, DotNetDevice, payload);
+      var machine = self.provision({ id: payload.properties.id }, DotNetDevice, payload);
 
-      var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
-      Object.keys(payload).forEach(function(key) {
-        if (reserved.indexOf(key) === -1)  {
-          machine[key] = payload[key];
-        }
+      Object.keys(payload.properties).forEach(function(key) {
+        machine[key] = payload.properties[key];
       });
 
       payload.OnUpdate(function(result, callback2) {
-        result.type = result.Type;
-        result.state = result.State;
-        result.id = result.Id;
-        result.name = result.Name;
-        delete result.Type;
-        delete result.State;
-        delete result.Id;
-        delete result.Name;
+        result.properties = JSON.parse(result.Properties);
 
-        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
-        Object.keys(result).forEach(function(key) {
-          if (reserved.indexOf(key) === -1)  {
-            machine[key] = result[key];
-          }
+        Object.keys(result.properties).forEach(function(key) {
+          machine[key] = result.properties[key];
         });
 
         callback2();
       });
 
       payload.OnSave(function(result, callback2) {
-        result.type = result.Type;
-        result.state = result.State;
-        result.id = result.Id;
-        result.name = result.Name;
-        delete result.Type;
-        delete result.State;
-        delete result.Id;
-        delete result.Name;
+        result.properties = JSON.parse(result.Properties);
 
-        var reserved = ['_allowed', '_transitions', 'id', 'Id', 'update', 'OnUpdate', 'fetch', 'save', 'OnSave'];
-        Object.keys(result).forEach(function(key) {
-          if (reserved.indexOf(key) === -1)  {
-            machine[key] = result[key];
-          }
+        Object.keys(result.properties).forEach(function(key) {
+          machine[key] = result.properties[key];
         });
 
         machine.save(callback2);
