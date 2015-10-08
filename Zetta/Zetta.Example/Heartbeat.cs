@@ -4,7 +4,6 @@ using Zetta;
 using Newtonsoft.Json;
 
 namespace Zetta.Example {
-	[JsonObject(MemberSerialization.OptIn)]
 	public class Heartbeat : Device {
 
 		public Heartbeat() {

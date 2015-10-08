@@ -6,7 +6,6 @@ using Zetta;
 using Newtonsoft.Json;
 
 namespace Zetta.Example {
-	[JsonObject(MemberSerialization.OptIn)]
 	public class LEDScout : Scout {
 		public override async Task<object> Initialize(dynamic input) {
 			var results = await Server.Find("where type=\"led\"");
