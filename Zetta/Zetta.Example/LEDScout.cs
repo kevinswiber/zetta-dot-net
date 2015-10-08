@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Zetta;
-using Newtonsoft.Json;
 
 namespace Zetta.Example {
     public class LEDScout : Scout {
