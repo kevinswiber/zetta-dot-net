@@ -47,6 +47,17 @@ namespace Zetta.Core {
             _save = function;
         }
 
+        public static T Create<T>() where T : Device {
+            var instance = Activator.CreateInstance<T>();
+            return Device.Intercept(instance);
+        }
+
+        public static T Intercept<T>(T device) where T : Device {
+            var interceptor = new PropertyInterceptor();
+            //var proxy = _generator.CreateClassProxy<T>(interceptor);
+            return null;
+        }
+
         private Func<object, Task<object>> WrapHandler(Func<object, Task> function) {
             Func<object, Task<object>> wrappedHandler = async (input) => {
                 await function(input);

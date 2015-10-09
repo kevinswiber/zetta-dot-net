@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Castle.DynamicProxy;
+using System.Collections.Generic;
 
 namespace Zetta.Core {
     public abstract class Scout {
         private Func<object, Task<object>> _discover;
         private Func<object, Task<object>> _provision;
+
+        private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
         public abstract Task Initialize();
 
