@@ -17,13 +17,15 @@ namespace Zetta.Core {
             return this;
         }
 
-        protected Device Map(string transition, Func<object, Task> function, IDictionary<string, string> fields = null) {
-            Func<object, Task<object>> wrappedHandler = async (input) => {
-                await function(input);
-                return Interop.Wrap(this);
-            };
+        protected Device Map(string transition, Func<Task> function, IDictionary<string, string> fields = null) {
+            var value = new TransitionValue { Handler = WrapHandler(function), Fields = fields };
+            _transitions.Add(transition, value);
+            return this;
+        }
 
-            _transitions.Add(transition, new TransitionValue { Handler = wrappedHandler, Fields = fields });
+        protected Device Map(string transition, Func<object, Task> function, IDictionary<string, string> fields = null) {
+            var value = new TransitionValue { Handler = WrapHandler(function), Fields = fields };
+            _transitions.Add(transition, value);
             return this;
         }
 
@@ -41,6 +43,24 @@ namespace Zetta.Core {
 
         public void SetSaveFunction(Func<object, Task<object>> function) {
             _save = function;
+        }
+
+        private Func<object, Task<object>> WrapHandler(Func<object, Task> function) {
+            Func<object, Task<object>> wrappedHandler = async (input) => {
+                await function(input);
+                return Interop.Wrap(this);
+            };
+
+            return wrappedHandler;
+        }
+
+        private Func<object, Task<object>> WrapHandler(Func<Task> function) {
+            Func<object, Task<object>> wrappedHandler = async (input) => {
+                await function();
+                return Interop.Wrap(this);
+            };
+
+            return wrappedHandler;
         }
 
         [JsonProperty]

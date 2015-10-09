@@ -10,14 +10,14 @@ namespace Zetta.Example {
             When("on", allow: new string[] { "turn-off" });
             When("off", allow: new string[] { "turn-on" });
 
-            Map("turn-on", async (input) => {
+            Map("turn-on", async () => {
                 State = "on";
-                await this.Save();
+                await Save();
             });
 
-            Map("turn-off", async (input) => {
+            Map("turn-off", async () => {
                 State = "off";
-                await this.Save();
+                await Save();
             });
         }
     }
