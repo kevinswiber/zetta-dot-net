@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Zetta;
+using Zetta.Core;
 
 namespace Zetta.Example {
     public class Startup {

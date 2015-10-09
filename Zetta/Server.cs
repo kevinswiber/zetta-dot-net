@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Zetta {
+namespace Zetta.Core {
     public class Server {
         private Func<object, Task<object>> _find;
         private Func<object, Task<object>> _observe;

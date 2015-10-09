@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Zetta {
+namespace Zetta.Core {
     public class Interop {
         public Interop() {
             Allowed = new Dictionary<string, string[]>();

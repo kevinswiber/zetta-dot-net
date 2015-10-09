@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Zetta;
+using Zetta.Core;
 
 namespace Zetta.Example {
     public class Heartbeat : Device {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Zetta {
+namespace Zetta.Core {
     public abstract class Scout {
         private Func<object, Task<object>> _discover;
         private Func<object, Task<object>> _provision;

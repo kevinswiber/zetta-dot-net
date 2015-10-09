@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Zetta {
+namespace Zetta.Core {
     public class TransitionValue {
         public Func<object, Task> Handler { get; set; }
 

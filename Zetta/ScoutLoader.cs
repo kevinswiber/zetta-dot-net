@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Zetta {
+namespace Zetta.Core {
     public class ScoutLoader {
         private dynamic _input;
         private Server _server;

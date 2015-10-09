@@ -1,5 +1,5 @@
 ﻿using System;
-using Zetta;
+using Zetta.Core;
 
 namespace Zetta.Example {
     public class LED : Device {

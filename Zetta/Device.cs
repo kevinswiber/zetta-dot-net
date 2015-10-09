@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Zetta {
+namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class Device {
         public IDictionary<string, string[]> _allowed = new Dictionary<string, string[]>();
