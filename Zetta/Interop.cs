@@ -44,6 +44,13 @@ namespace Zetta {
             return JsonConvert.SerializeObject(device, Formatting.None, settings);
         }
 
+        public static T DeserializeArray<T>(string json) where T : IEnumerable<Device> {
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            return JsonConvert.DeserializeObject<T>(json, settings);
+        }
+
         public string Properties { get; set; }
 
         public Func<object, Task<object>> OnUpdate { get; set; }
