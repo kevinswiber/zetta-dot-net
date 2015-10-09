@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Core", "Zetta.Core.csproj", "{2E56806F-4EAB-4023-9629-CC957D22B7F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Core", "Zetta.Core\Zetta.Core.csproj", "{2E56806F-4EAB-4023-9629-CC957D22B7F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Example", "Zetta.Example\Zetta.Example.csproj", "{FAB15334-09AF-45D8-B8D4-A95B85A52D51}"
 EndProject
