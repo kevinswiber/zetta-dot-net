@@ -18,7 +18,7 @@ namespace Zetta.Example {
                 Intensity = Math.Sin(_counter * (Math.PI / 180)) + 1.0;
                 _counter += 15;
 
-                Update();
+                Sync();
             };
         }
 

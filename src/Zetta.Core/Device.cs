@@ -29,7 +29,7 @@ namespace Zetta.Core {
             return this;
         }
 
-        public async Task Update() {
+        public async Task Sync() {
             await this._sync(Interop.Wrap(this));
         }
 
