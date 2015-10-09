@@ -42,6 +42,7 @@
     <Compile Include="ScoutLoader.cs" />
     <Compile Include="TransitionValue.cs" />
     <Compile Include="Interop.cs" />
+    <Compile Include="MonitorAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

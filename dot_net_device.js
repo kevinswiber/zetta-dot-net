@@ -15,6 +15,10 @@ DotNetDevice.prototype.init = function(config) {
 
   config.allowed = this._config.Allowed;
 
+  this._config.Monitors.forEach(function(name) {
+    config.monitor(name);
+  });
+
   var self = this;
 
   // need to account for fields, maybe through attributes

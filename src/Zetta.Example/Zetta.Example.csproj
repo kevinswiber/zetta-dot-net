@@ -49,8 +49,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="LED.cs" />
     <Compile Include="LEDScout.cs" />
-    <Compile Include="HeartbeatScout.cs" />
-    <Compile Include="Heartbeat.cs" />
+    <Compile Include="PhotocellScout.cs" />
+    <Compile Include="Photocell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

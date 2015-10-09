@@ -8,7 +8,7 @@ namespace Zetta.Example {
             var loader = ScoutLoader.Create(input);
 
             await loader.Use(new LEDScout());
-            await loader.Use(new HeartbeatScout());
+            await loader.Use(new PhotocellScout());
 
             return null;
         }
