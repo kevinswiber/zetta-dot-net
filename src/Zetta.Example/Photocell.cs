@@ -23,7 +23,6 @@ namespace Zetta.Example {
         }
 
         [Monitor]
-        [JsonProperty]
         public double Intensity { get; set; }
     }
 }

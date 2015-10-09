@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Zetta.Core {
-    [JsonObject(MemberSerialization.OptIn)]
+    [JsonObject(MemberSerialization.OptOut)]
     public abstract class Device {
+        [JsonIgnore]
         public IDictionary<string, string[]> _allowed = new Dictionary<string, string[]>();
+        [JsonIgnore]
         public IDictionary<string, TransitionValue> _transitions = new Dictionary<string, TransitionValue>();
 
         private Func<object, Task<object>> _sync;
