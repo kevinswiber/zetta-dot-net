@@ -25,8 +25,8 @@ namespace Zetta.Core {
             interop.Allowed = device._allowed;
             interop.Transitions = device._transitions;
 
-            interop.OnUpdate = async (dynamic input) => {
-                device.SetUpdateFunction((Func<object, Task<object>>)input);
+            interop.OnSync = async (dynamic input) => {
+                device.SetSyncFunction((Func<object, Task<object>>)input);
                 return Wrap(device);
             };
 
@@ -68,7 +68,7 @@ namespace Zetta.Core {
 
         public string Properties { get; set; }
 
-        public Func<object, Task<object>> OnUpdate { get; set; }
+        public Func<object, Task<object>> OnSync { get; set; }
 
         public Func<object, Task<object>> OnSave { get; set; }
 

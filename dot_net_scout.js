@@ -42,10 +42,10 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      payload.OnUpdate(function(result, callback2) {
+      payload.OnSync(function(result, callback2) {
         result.properties = JSON.parse(result.Properties);
         Object.keys(result.properties).forEach(function(key) {
-          machine[key] = result[key];
+          machine[key] = result.properties[key];
         });
 
         callback2();
@@ -78,7 +78,7 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      payload.OnUpdate(function(result, callback2) {
+      payload.OnSync(function(result, callback2) {
         result.properties = JSON.parse(result.Properties);
 
         Object.keys(result.properties).forEach(function(key) {

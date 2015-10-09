@@ -9,7 +9,7 @@ namespace Zetta.Core {
         public IDictionary<string, string[]> _allowed = new Dictionary<string, string[]>();
         public IDictionary<string, TransitionValue> _transitions = new Dictionary<string, TransitionValue>();
 
-        private Func<object, Task<object>> _update;
+        private Func<object, Task<object>> _sync;
         private Func<object, Task<object>> _save;
 
         protected Device When(string state, string[] allow) {
@@ -30,15 +30,15 @@ namespace Zetta.Core {
         }
 
         public async Task Update() {
-            await this._update(Interop.Wrap(this));
+            await this._sync(Interop.Wrap(this));
         }
 
         public async Task Save() {
             await this._save(Interop.Wrap(this));
         }
 
-        public void SetUpdateFunction(Func<object, Task<object>> function) {
-            _update = function;
+        public void SetSyncFunction(Func<object, Task<object>> function) {
+            _sync = function;
         }
 
         public void SetSaveFunction(Func<object, Task<object>> function) {
