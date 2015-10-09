@@ -11,7 +11,8 @@ namespace Zetta.Example {
             if (results.Count() > 0) {
                 await Provision(results.First());
             } else {
-                await Discover(Device.Create<LED>());
+                //await Discover(Device.Create<LED>());
+                await Discover(new LED());
             }
         }
     }

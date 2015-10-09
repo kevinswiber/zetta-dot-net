@@ -19,8 +19,8 @@ namespace Zetta.Core {
         public async Task<IEnumerable<T>> Find<T>(string query) where T : Device {
             var results = (string)await _find(query);
 
-            return Interop.DeserializeArray<List<T>>(results)
-                .Select((device) => Device.Intercept(device));
+            return Interop.DeserializeArray<List<T>>(results);
+            //.Select((device) => Device.Intercept(device));
         }
     }
 }

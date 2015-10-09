@@ -8,8 +8,6 @@ namespace Zetta.Core {
         private Func<object, Task<object>> _discover;
         private Func<object, Task<object>> _provision;
 
-        private static readonly ProxyGenerator _generator = new ProxyGenerator();
-
         public abstract Task Initialize();
 
         public async Task Provision<T>(T device) where T : Device {
