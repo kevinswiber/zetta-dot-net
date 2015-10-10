@@ -1,13 +1,16 @@
 ﻿using System;
 using Castle.DynamicProxy;
 
-namespace Zetta {
+namespace Zetta.Core {
     public class PropertyInterceptor : IInterceptor {
-        public PropertyInterceptor() {
-        }
-
         public void Intercept(IInvocation invocation) {
-            Console.WriteLine(invocation.Method.Name);
+            if (invocation.Method.Name.StartsWith("set_")) {
+                if (invocation.InvocationTarget is Device) {
+                    var device = (Device)(invocation.InvocationTarget);
+                    device.Sync();
+                }
+            }
+            invocation.Proceed();
         }
     }
 }

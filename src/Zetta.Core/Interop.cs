@@ -19,7 +19,9 @@ namespace Zetta.Core {
             _settings.ContractResolver = Resolver;
         }
 
-        public static Interop Wrap<T>(T device) where T : Device {
+        public static Interop Wrap<T>(T proxiedDevice) where T : Device {
+            var device = Device.RemoveProxy(proxiedDevice);
+
             var interop = new Interop();
             interop.Properties = Serialize(device);
             interop.Allowed = device._allowed;

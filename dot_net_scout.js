@@ -104,7 +104,7 @@ DotNetScout.prototype.init = function(next) {
 
   this._interop(options, function(err, result) {
     if (err) {
-      throw err;
+      console.log(err);
     }
 
     next();

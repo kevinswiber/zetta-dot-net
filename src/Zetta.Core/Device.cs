@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Castle.DynamicProxy;
@@ -50,15 +51,33 @@ namespace Zetta.Core {
             _save = function;
         }
 
-        public static T Create<T>() where T : Device {
-            var instance = Activator.CreateInstance<T>();
-            return Device.Intercept(instance);
+        public override int GetHashCode() {
+            var code = !string.IsNullOrEmpty(Id) ? Id.GetHashCode() : base.GetHashCode();
+            return code;
         }
 
-        public static T Intercept<T>(T device) where T : Device {
+        public static T Create<T>() where T : Device {
             var interceptor = new PropertyInterceptor();
             var proxy = _generator.CreateClassProxy<T>(interceptor);
-            return null;
+            return proxy;
+        }
+
+        public static T InterceptDevice<T>(T device) where T : Device {
+            if (ProxyUtil.IsProxy(device)) {
+                return device;
+            }
+
+            var interceptor = new PropertyInterceptor();
+            var proxy = _generator.CreateClassProxyWithTarget<T>(device, interceptor);
+            return proxy;
+        }
+
+        public static T RemoveProxy<T>(T device) where T : Device {
+            if (ProxyUtil.IsProxy(device)) {
+                return (T)ProxyUtil.GetUnproxiedInstance(device);
+            } else {
+                return device;
+            }
         }
 
         private Func<object, Task<object>> WrapHandler(Func<object, Task> function) {

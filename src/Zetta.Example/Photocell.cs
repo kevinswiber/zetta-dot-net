@@ -17,12 +17,10 @@ namespace Zetta.Example {
             _timer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 Intensity = Math.Sin(_counter * (Math.PI / 180)) + 1.0;
                 _counter += 15;
-
-                Sync();
             };
         }
 
         [Monitor]
-        public double Intensity { get; set; }
+        public virtual double Intensity { get; set; }
     }
 }

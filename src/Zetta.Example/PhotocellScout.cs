@@ -11,7 +11,7 @@ namespace Zetta.Example {
             if (results.Count() > 0) {
                 await Provision(results.First());
             } else {
-                await Discover(new Photocell());
+                await Discover(Device.Create<Photocell>());
             }
         }
     }
