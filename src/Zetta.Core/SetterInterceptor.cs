@@ -5,10 +5,12 @@ namespace Zetta.Core {
     public class SetterInterceptor : IInterceptor {
         public void Intercept(IInvocation invocation) {
             if (!(invocation.InvocationTarget is Device)) {
+                invocation.Proceed();
                 return;
             }
 
             if (!invocation.Method.Name.StartsWith("set_")) {
+                invocation.Proceed();
                 return;
             }
 
@@ -17,10 +19,12 @@ namespace Zetta.Core {
             var getter = invocation.TargetType.GetMethod(getterName);
 
             if (getter == null) {
+                invocation.Proceed();
                 return;
             }
 
             if (!getter.IsPublic) {
+                invocation.Proceed();
                 return;
             }
 

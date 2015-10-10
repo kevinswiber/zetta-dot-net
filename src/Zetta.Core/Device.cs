@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Castle.DynamicProxy;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
@@ -12,8 +11,6 @@ namespace Zetta.Core {
         public IDictionary<string, string[]> _allowed = new Dictionary<string, string[]>();
         [JsonIgnore]
         public IDictionary<string, TransitionValue> _transitions = new Dictionary<string, TransitionValue>();
-
-        private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
         private Func<object, Task<object>> _sync;
         private Func<object, Task<object>> _save;
@@ -57,27 +54,7 @@ namespace Zetta.Core {
         }
 
         public static T Create<T>() where T : Device {
-            var interceptor = new SetterInterceptor();
-            var proxy = _generator.CreateClassProxy<T>(interceptor);
-            return proxy;
-        }
-
-        public static T InterceptDevice<T>(T device) where T : Device {
-            if (ProxyUtil.IsProxy(device)) {
-                return device;
-            }
-
-            var interceptor = new SetterInterceptor();
-            var proxy = _generator.CreateClassProxyWithTarget<T>(device, interceptor);
-            return proxy;
-        }
-
-        public static T RemoveProxy<T>(T device) where T : Device {
-            if (ProxyUtil.IsProxy(device)) {
-                return (T)ProxyUtil.GetUnproxiedInstance(device);
-            } else {
-                return device;
-            }
+            return DeviceProxy.Create<T>();
         }
 
         private Func<object, Task<object>> WrapHandler(Func<object, Task> function) {

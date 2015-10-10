@@ -47,6 +47,7 @@
     <Compile Include="Interop.cs" />
     <Compile Include="MonitorAttribute.cs" />
     <Compile Include="SetterInterceptor.cs" />
+    <Compile Include="DeviceProxy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

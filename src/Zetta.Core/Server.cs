@@ -20,7 +20,7 @@ namespace Zetta.Core {
             var results = (string)await _find(query);
             var deserialized = Interop.DeserializeArray<List<T>>(results)
                 .Select((device) => {
-                return Device.InterceptDevice(device);
+                return DeviceProxy.InterceptDevice(device);
             }).ToArray();
 
             return deserialized.AsEnumerable();

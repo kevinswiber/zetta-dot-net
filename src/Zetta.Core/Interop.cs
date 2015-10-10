@@ -20,7 +20,7 @@ namespace Zetta.Core {
         }
 
         public static Interop Wrap<T>(T proxiedDevice) where T : Device {
-            var device = Device.RemoveProxy(proxiedDevice);
+            var device = DeviceProxy.RemoveProxy(proxiedDevice);
 
             var interop = new Interop();
             interop.Properties = Serialize(device);
