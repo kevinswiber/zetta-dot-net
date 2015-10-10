@@ -46,7 +46,7 @@
     <Compile Include="TransitionValue.cs" />
     <Compile Include="Interop.cs" />
     <Compile Include="MonitorAttribute.cs" />
-    <Compile Include="PropertyInterceptor.cs" />
+    <Compile Include="SetterInterceptor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

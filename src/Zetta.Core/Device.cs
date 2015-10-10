@@ -57,7 +57,7 @@ namespace Zetta.Core {
         }
 
         public static T Create<T>() where T : Device {
-            var interceptor = new PropertyInterceptor();
+            var interceptor = new SetterInterceptor();
             var proxy = _generator.CreateClassProxy<T>(interceptor);
             return proxy;
         }
@@ -67,7 +67,7 @@ namespace Zetta.Core {
                 return device;
             }
 
-            var interceptor = new PropertyInterceptor();
+            var interceptor = new SetterInterceptor();
             var proxy = _generator.CreateClassProxyWithTarget<T>(device, interceptor);
             return proxy;
         }
