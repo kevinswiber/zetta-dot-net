@@ -1,7 +1,5 @@
 using System;
-using System.Threading.Tasks;
 using System.Timers;
-using Newtonsoft.Json;
 using Zetta.Core;
 
 namespace Zetta.Example {
