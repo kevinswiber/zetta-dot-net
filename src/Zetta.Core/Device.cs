@@ -57,8 +57,8 @@ namespace Zetta.Core {
             return code;
         }
 
-        public static T Create<T>() where T : Device {
-            return DeviceProxy.Create<T>();
+        public static T Create<T>(object[] args = null) where T : Device {
+            return DeviceProxy.Create<T>(args);
         }
 
         private Func<object, Task<object>> WrapHandler(Func<object, Task> function) {

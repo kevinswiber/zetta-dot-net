@@ -5,9 +5,9 @@ namespace Zetta.Core {
     public class DeviceProxy {
         private static readonly ProxyGenerator _generator = new ProxyGenerator();
 
-        public static T Create<T>() where T : Device {
+        public static T Create<T>(object[] args = null) where T : Device {
             var interceptor = new SetterInterceptor();
-            var proxy = _generator.CreateClassProxy<T>(interceptor);
+            var proxy = (T)_generator.CreateClassProxy(typeof(T), args, interceptor);
             return proxy;
         }
 
