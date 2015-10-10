@@ -20,6 +20,10 @@ namespace Zetta.Core {
             return this;
         }
 
+        protected Device When(string state, string allow) {
+            return When(state, new string[] { allow });
+        }
+
         protected Device Map(string transition, Func<Task> function, IDictionary<string, string> fields = null) {
             var value = new TransitionValue { Handler = WrapHandler(function), Fields = fields };
             _transitions.Add(transition, value);
