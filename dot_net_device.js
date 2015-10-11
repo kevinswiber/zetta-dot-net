@@ -23,8 +23,10 @@ DotNetDevice.prototype.init = function(config) {
 
   // need to account for fields, maybe through attributes
   Object.keys(this._config.Transitions).forEach(function(key) {
-    var handler = function(cb) {
-      self._config.Transitions[key].Handler(null, function(err, result) {
+    var handler = function() {
+      var args = Array.prototype.slice.call(arguments);
+      var cb = args.pop();
+      self._config.Transitions[key].Handler(args, function(err, result) {
         if (err) {
           cb(err);
           return;
@@ -42,6 +44,17 @@ DotNetDevice.prototype.init = function(config) {
       });
     };
 
-    config.transitions[key] = { handler: handler, fields: self._config.Transitions[key].Fields };
+    var fields = self._config.Transitions[key].Fields;
+
+    if (fields) {
+      fields = fields.map(function(field) {
+        return {
+          name: field.Name,
+          type: field.Type.toLowerCase(),
+          value: field.Value
+        };
+      });
+    }
+    config.transitions[key] = { handler: handler, fields: fields };
   });
 };

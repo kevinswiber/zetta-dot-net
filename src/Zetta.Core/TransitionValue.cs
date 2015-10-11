@@ -6,6 +6,6 @@ namespace Zetta.Core {
     public class TransitionValue {
         public Func<object, Task> Handler { get; set; }
 
-        public IDictionary<string, string> Fields { get; set; }
+        public IEnumerable<Field> Fields { get; set; }
     }
 }

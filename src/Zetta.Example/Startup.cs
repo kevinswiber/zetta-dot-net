@@ -9,6 +9,7 @@ namespace Zetta.Example {
 
             await loader.Use(new LEDScout());
             await loader.Use(new PhotocellScout());
+            await loader.Use(new DisplayScout());
 
             return null;
         }

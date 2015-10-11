@@ -51,6 +51,8 @@
     <Compile Include="LEDScout.cs" />
     <Compile Include="PhotocellScout.cs" />
     <Compile Include="Photocell.cs" />
+    <Compile Include="DisplayScout.cs" />
+    <Compile Include="Display.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
