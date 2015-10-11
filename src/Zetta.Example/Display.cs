@@ -5,7 +5,9 @@ namespace Zetta.Example {
     public class Display : Device {
         public Display() {
             State = "ready";
+
             When("ready", allow: "change");
+
             Map<string>("change", async (message) => {
                 Message = message;
                 await Save();

@@ -25,24 +25,6 @@ namespace Zetta.Core {
             return When(state, new string[] { allow });
         }
 
-        /*protected Device MapExp<T1>(string transition, Expression<Func<T1, Task>> exp) {
-            exp.Parameters.ToList().ForEach(Console.WriteLine);
-            return null;
-        }*/
-
-        protected Device Map(string transition, Func<Task> function) {
-            var value = new TransitionValue { Handler = WrapHandler(function), Fields = null };
-            _transitions.Add(transition, value);
-            return this;
-        }
-
-        protected Device Map<T1>(string transition, Func<T1, Task> function, Field field) {
-            var value = 
-                new TransitionValue { Handler = WrapHandler<T1>(function), Fields = new Field[] { field } };
-            _transitions.Add(transition, value);
-            return this;
-        }
-
         public async Task Sync() {
             await this._sync(Interop.Wrap(this));
         }
@@ -68,6 +50,56 @@ namespace Zetta.Core {
             return DeviceProxy.Create<T>(args);
         }
 
+        protected Device Map(string transition, Func<Task> function) {
+            var value = new TransitionValue { Handler = WrapHandler(function), Fields = null };
+            _transitions.Add(transition, value);
+            return this;
+        }
+
+        protected Device Map<T1>(string transition, Func<T1, Task> function, Field field) {
+            var value = 
+                new TransitionValue { Handler = WrapHandler<T1>(function), Fields = new Field[] { field } };
+            _transitions.Add(transition, value);
+            return this;
+        }
+
+        protected Device Map<T1, T2>(string transition, Func<T1, T2, Task> function, IEnumerable<Field> fields) {
+            var value = 
+                new TransitionValue { Handler = WrapHandler<T1, T2>(function), Fields = fields };
+            _transitions.Add(transition, value);
+            return this;
+        }
+
+        protected Device Map<T1, T2, T3>(string transition, Func<T1, T2, T3, Task> function, IEnumerable<Field> fields) {
+            var value = 
+                new TransitionValue { Handler = WrapHandler<T1, T2, T3>(function), Fields = fields };
+            _transitions.Add(transition, value);
+            return this;
+        }
+
+        protected Device Map<T1, T2, T3, T4>(string transition, Func<T1, T2, T3, T4, Task> function, IEnumerable<Field> fields) {
+            var value = 
+                new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4>(function), Fields = fields };
+            _transitions.Add(transition, value);
+            return this;
+        }
+
+        protected Device Map<T1, T2, T3, T4, T5>(string transition, Func<T1, T2, T3, T4, T5, Task> function, IEnumerable<Field> fields) {
+            var value = 
+                new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4, T5>(function), Fields = fields };
+            _transitions.Add(transition, value);
+            return this;
+        }
+
+        private Func<object, Task<object>> WrapHandler(Func<Task> function) {
+            Func<object, Task<object>> wrappedHandler = async (input) => {
+                await function();
+                return Interop.Wrap(this);
+            };
+
+            return wrappedHandler;
+        }
+
         private Func<object, Task<object>> WrapHandler<T1>(Func<T1, Task> function) {
             Func<object, Task<object>> wrappedHandler = async (input) => {
                 var parameters = (object[])input;
@@ -79,9 +111,46 @@ namespace Zetta.Core {
             return wrappedHandler;
         }
 
-        private Func<object, Task<object>> WrapHandler(Func<Task> function) {
+        private Func<object, Task<object>> WrapHandler<T1, T2>(Func<T1, T2, Task> function) {
             Func<object, Task<object>> wrappedHandler = async (input) => {
-                await function();
+                var parameters = (object[])input;
+
+                await function((T1)parameters[0], (T2)parameters[1]);
+                return Interop.Wrap(this);
+            };
+
+            return wrappedHandler;
+        }
+
+        private Func<object, Task<object>> WrapHandler<T1, T2, T3>(Func<T1, T2, T3, Task> function) {
+            Func<object, Task<object>> wrappedHandler = async (input) => {
+                var parameters = (object[])input;
+
+                await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
+                return Interop.Wrap(this);
+            };
+
+            return wrappedHandler;
+        }
+
+        private Func<object, Task<object>> WrapHandler<T1, T2, T3, T4>(Func<T1, T2, T3, T4, Task> function) {
+            Func<object, Task<object>> wrappedHandler = async (input) => {
+                var parameters = (object[])input;
+
+                await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
+                    (T4)parameters[3]);
+                return Interop.Wrap(this);
+            };
+
+            return wrappedHandler;
+        }
+
+        private Func<object, Task<object>> WrapHandler<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, Task> function) {
+            Func<object, Task<object>> wrappedHandler = async (input) => {
+                var parameters = (object[])input;
+
+                await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
+                    (T4)parameters[3], (T5)parameters[4]);
                 return Interop.Wrap(this);
             };
 
