@@ -48,7 +48,6 @@
     <Compile Include="MonitorAttribute.cs" />
     <Compile Include="SetterInterceptor.cs" />
     <Compile Include="DeviceProxy.cs" />
-    <Compile Include="FieldAttribute.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="Field.cs" />
   </ItemGroup>
