@@ -28,22 +28,26 @@ namespace Zetta.Core {
             interop.Transitions = device._transitions;
 
             interop.OnSync = async (dynamic input) => {
-                device.SetSyncFunction((Func<object, Task<object>>)input);
+                await Task.Run(() => device.SetSyncFunction((Func<object, Task<object>>)input));
                 return Wrap(device);
             };
 
             interop.OnSave = async (dynamic input) => {
-                device.SetSaveFunction((Func<object, Task<object>>)input);
-                return Wrap(device);
+                return await Task.Run(() => {
+                    device.SetSaveFunction((Func<object, Task<object>>)input);
+                    return Wrap(device);
+                });
             };
 
             interop.Fetch = async (dynamic input) => {
-                return Wrap(device);
+                return await Task.FromResult(Wrap(device));
             };
 
             interop.SetId = async (dynamic input) => {
-                device.Id = (string)input;
-                return Wrap(device);
+                return await Task.Run(() => {
+                    device.Id = (string)input;
+                    return Wrap(device);
+                });
             };
 
             var type = typeof(T);
