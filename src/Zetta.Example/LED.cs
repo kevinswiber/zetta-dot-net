@@ -7,8 +7,8 @@ namespace Zetta.Example {
         public LED() {
             State = "off";
 
-            When("on", allow: new string[] { "turn-off", "test" });
-            When("off", allow: new string[] { "turn-on", "test" });
+            When("on", allow: "turn-off");
+            When("off", allow: "turn-on");
 
             Map("turn-on", async () => {
                 State = "on";
