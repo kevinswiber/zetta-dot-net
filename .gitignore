@@ -4,3 +4,7 @@ node_modules
 bin
 obj
 *.userprefs
+.*.swo
+.*.swp
+*.user
+.vs
