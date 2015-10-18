@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Core", "Zetta.Core\Ze
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Example", "Zetta.Example\Zetta.Example.csproj", "{FAB15334-09AF-45D8-B8D4-A95B85A52D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Core.Tests", "Zetta.Core.Tests\Zetta.Core.Tests.csproj", "{E351CD74-6A5E-468A-9C5D-21343D4B0AB0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zetta.Core.Tests", "Zetta.Core.Tests\Zetta.Core.Tests.csproj", "{B706EA5F-2E40-489A-815F-4F71F3E0E9DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{FAB15334-09AF-45D8-B8D4-A95B85A52D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAB15334-09AF-45D8-B8D4-A95B85A52D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAB15334-09AF-45D8-B8D4-A95B85A52D51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E351CD74-6A5E-468A-9C5D-21343D4B0AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E351CD74-6A5E-468A-9C5D-21343D4B0AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E351CD74-6A5E-468A-9C5D-21343D4B0AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E351CD74-6A5E-468A-9C5D-21343D4B0AB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B706EA5F-2E40-489A-815F-4F71F3E0E9DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B706EA5F-2E40-489A-815F-4F71F3E0E9DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B706EA5F-2E40-489A-815F-4F71F3E0E9DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B706EA5F-2E40-489A-815F-4F71F3E0E9DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
