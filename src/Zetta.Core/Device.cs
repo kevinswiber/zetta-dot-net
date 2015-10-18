@@ -173,12 +173,12 @@ namespace Zetta.Core {
         }
 
         [JsonProperty]
-        public string Id { get; set; }
+        public virtual string Id { get; set; }
 
         [JsonProperty]
-        public string Type { get; set; }
+        public virtual string Type { get; set; }
 
         [JsonProperty]
-        public string State { get; set; }
+        public virtual string State { get; set; }
     }
 }

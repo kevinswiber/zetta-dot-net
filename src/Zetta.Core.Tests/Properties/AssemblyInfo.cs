@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Zetta.Example.Tests")]
+[assembly: AssemblyTitle("Zetta.Core.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Zetta.Example.Tests")]
+[assembly: AssemblyProduct("Zetta.Core.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e102c8c1-d62f-4370-ae73-de4955018d1c")]
+[assembly: Guid("e351cd74-6a5e-468a-9c5d-21343d4b0ab0")]
 
 // Version information for an assembly consists of the following four values:
 //

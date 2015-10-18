@@ -68,6 +68,10 @@ namespace Zetta.Core {
             return JsonConvert.SerializeObject(device, Formatting.None, _settings);
         }
 
+        public static T Deserialize<T>(string json) where T : Device {
+            return JsonConvert.DeserializeObject<T>(json, _settings);
+        }
+
         public static T DeserializeArray<T>(string json) where T : IEnumerable<Device> {
             return JsonConvert.DeserializeObject<T>(json, _settings);
         }

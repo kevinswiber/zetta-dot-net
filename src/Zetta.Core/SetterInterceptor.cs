@@ -1,5 +1,4 @@
-﻿using System;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 
 namespace Zetta.Core {
     public class SetterInterceptor : IInterceptor {
@@ -29,7 +28,7 @@ namespace Zetta.Core {
             }
 
             var device = (Device)(invocation.InvocationTarget);
-            device.Sync();
+            device.Sync().ContinueWith((task) => { });
 
             invocation.Proceed();
         }
