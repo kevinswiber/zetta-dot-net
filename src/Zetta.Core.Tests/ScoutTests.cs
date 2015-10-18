@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using Zetta.Core.Tests.Helpers;
 
 namespace Zetta.Core.Tests {
-    [TestClass]
+    [TestFixture]
     public class ScoutTests {
-        [TestMethod]
+        [Test]
         public async Task Discover_Function_Is_Set() {
             var input = new MockInput();
             var server = new MockServer();
@@ -27,7 +26,7 @@ namespace Zetta.Core.Tests {
             await loader.Use(new LEDScout());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Provision_Function_Is_Set() {
             var input = new MockInput();
             var server = new MockServer();
@@ -47,7 +46,7 @@ namespace Zetta.Core.Tests {
             await loader.Use(new LEDScout());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Discover_Ensures_Type_Is_Set() {
             var input = new MockInput();
             var server = new MockServer();
@@ -56,7 +55,7 @@ namespace Zetta.Core.Tests {
                 var interop = (Interop)obj;
                 var json = JObject.Parse(interop.Properties);
 
-                Assert.AreEqual("led", json.GetValue("type"));
+                Assert.AreEqual("led", json.GetValue("type").ToString());
 
                 return Task.Run(() => (object)null);
             };
@@ -71,7 +70,7 @@ namespace Zetta.Core.Tests {
             await loader.Use(new LEDScout());
         }
 
-        [TestMethod]
+        [Test]
         public async Task Provision_Ensures_Type_Is_Set() {
             var input = new MockInput();
             var server = new MockServer();
@@ -80,7 +79,7 @@ namespace Zetta.Core.Tests {
                 var interop = (Interop)obj;
                 var json = JObject.Parse(interop.Properties);
 
-                Assert.AreEqual("led", json.GetValue("type"));
+                Assert.AreEqual("led", json.GetValue("type").ToString());
 
                 return Task.Run(() => (object)null);
             };
