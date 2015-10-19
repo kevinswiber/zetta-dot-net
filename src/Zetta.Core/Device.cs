@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using Zetta.Core.Interop;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
@@ -25,11 +26,11 @@ namespace Zetta.Core {
         }
 
         public async Task Sync() {
-            await this._sync(Interop.Wrap(this));
+            await this._sync(PayloadFactory.Create(this));
         }
 
         public async Task Save() {
-            await this._save(Interop.Wrap(this));
+            await this._save(PayloadFactory.Create(this));
         }
 
         public void SetSyncFunction(Func<object, Task<object>> function) {
@@ -97,7 +98,7 @@ namespace Zetta.Core {
         private Func<object, Task<object>> WrapHandler(Func<Task> function) {
             Func<object, Task<object>> wrappedHandler = async (input) => {
                 await function();
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -108,7 +109,7 @@ namespace Zetta.Core {
                 var parameters = (object[])input;
 
                 await function((T1)parameters[0]);
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -119,7 +120,7 @@ namespace Zetta.Core {
                 var parameters = (object[])input;
 
                 await function((T1)parameters[0], (T2)parameters[1]);
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -130,7 +131,7 @@ namespace Zetta.Core {
                 var parameters = (object[])input;
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -142,7 +143,7 @@ namespace Zetta.Core {
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
                     (T4)parameters[3]);
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -154,7 +155,7 @@ namespace Zetta.Core {
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
                     (T4)parameters[3], (T5)parameters[4]);
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -166,7 +167,7 @@ namespace Zetta.Core {
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
                     (T4)parameters[3], (T5)parameters[4], (T6)parameters[5]);
-                return Interop.Wrap(this);
+                return PayloadFactory.Create(this);
             };
 
             return wrappedHandler;

@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Zetta.Core.Tests.Helpers;
+using Zetta.Core.Interop;
 
 namespace Zetta.Core.Tests {
     [TestFixture]
@@ -52,7 +53,7 @@ namespace Zetta.Core.Tests {
             var server = new MockServer();
 
             input.discover = (obj) => {
-                var interop = (Interop)obj;
+                var interop = (Payload)obj;
                 var json = JObject.Parse(interop.Properties);
 
                 Assert.AreEqual("led", json.GetValue("type").ToString());
@@ -76,7 +77,7 @@ namespace Zetta.Core.Tests {
             var server = new MockServer();
 
             input.provision = (obj) => {
-                var interop = (Interop)obj;
+                var interop = (Payload)obj;
                 var json = JObject.Parse(interop.Properties);
 
                 Assert.AreEqual("led", json.GetValue("type").ToString());

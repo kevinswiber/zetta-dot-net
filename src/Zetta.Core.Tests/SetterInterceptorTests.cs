@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zetta.Core.Interop;
 
 namespace Zetta.Core.Tests {
     [TestFixture]
@@ -19,7 +20,7 @@ namespace Zetta.Core.Tests {
             var dummy = DeviceProxy.Create<Dummy>();
 
             dummy.SetSyncFunction((input) => {
-                var device = Interop.Deserialize<Dummy>(((Interop)input).Properties);
+                var device = Serializer.Deserialize<Dummy>(((Payload)input).Properties);
 
                 Assert.AreEqual(3, device.Value);
                 source.SetResult(true);

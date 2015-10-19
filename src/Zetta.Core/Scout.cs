@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using System.Collections.Generic;
+using Zetta.Core.Interop;
 
 namespace Zetta.Core {
     public abstract class Scout {
@@ -12,12 +13,12 @@ namespace Zetta.Core {
 
         public async Task Provision<T>(T device) where T : Device {
             EnsureType(device);
-            await _provision(Interop.Wrap(device));
+            await _provision(PayloadFactory.Create(device));
         }
 
         public async Task Discover<T>(T device) where T : Device {
             EnsureType(device);
-            await _discover(Interop.Wrap(device));
+            await _discover(PayloadFactory.Create(device));
         }
 
         public void SetProvisionFunction(Func<object, Task<object>> provision) {
@@ -31,7 +32,7 @@ namespace Zetta.Core {
         private void EnsureType<T>(T device) where T : Device {
             if (string.IsNullOrEmpty(device.Type)) {
                 var deviceType = typeof(T);
-                device.Type = Interop.Resolver.GetResolvedPropertyName(deviceType.Name);
+                device.Type = Serializer.Resolver.GetResolvedPropertyName(deviceType.Name);
             }
         }
 

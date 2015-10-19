@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Zetta.Core.Interop;
 
 namespace Zetta.Core {
     public class Server {
@@ -18,7 +19,7 @@ namespace Zetta.Core {
 
         public async Task<IEnumerable<T>> Find<T>(string query) where T : Device {
             var results = (string)await _find(query);
-            var deserialized = Interop.DeserializeArray<List<T>>(results)
+            var deserialized = Serializer.DeserializeArray<List<T>>(results)
                 .Select((device) => {
                 return DeviceProxy.InterceptDevice(device);
             }).ToArray();
