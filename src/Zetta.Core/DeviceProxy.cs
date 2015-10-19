@@ -21,6 +21,10 @@ namespace Zetta.Core {
             return proxy;
         }
 
+        public static bool IsProxy<T>(T device) {
+            return ProxyUtil.IsProxy(device);
+        }
+
         public static T RemoveProxy<T>(T device) where T : Device {
             if (ProxyUtil.IsProxy(device)) {
                 return (T)ProxyUtil.GetUnproxiedInstance(device);

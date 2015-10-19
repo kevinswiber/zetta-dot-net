@@ -46,6 +46,8 @@
     <Compile Include="Helpers\MockServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoutTests.cs" />
+    <Compile Include="ServerTests.cs" />
+    <Compile Include="SetterInterceptorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zetta.Core\Zetta.Core.csproj">

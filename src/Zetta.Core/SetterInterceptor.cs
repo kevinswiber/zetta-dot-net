@@ -27,10 +27,10 @@ namespace Zetta.Core {
                 return;
             }
 
+            invocation.Proceed();
+
             var device = (Device)(invocation.InvocationTarget);
             device.Sync().ContinueWith((task) => { });
-
-            invocation.Proceed();
         }
     }
 }
