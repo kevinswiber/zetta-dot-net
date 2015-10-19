@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Zetta.Core.Tests.Helpers;
-using System.Linq;
 
 namespace Zetta.Core.Tests {
     [TestFixture]

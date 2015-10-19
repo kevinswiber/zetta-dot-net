@@ -17,24 +17,24 @@ namespace Zetta.Core.Interop {
 
             payload.OnSync = async (dynamic input) => {
                 await Task.Run(() => device.SetSyncFunction((Func<object, Task<object>>)input));
-                return PayloadFactory.Create(device);
+                return Create(device);
             };
 
             payload.OnSave = async (dynamic input) => {
                 return await Task.Run(() => {
                     device.SetSaveFunction((Func<object, Task<object>>)input);
-                    return PayloadFactory.Create(device);
+                    return Create(device);
                 });
             };
 
             payload.Fetch = async (dynamic input) => {
-                return await Task.FromResult(PayloadFactory.Create(device));
+                return await Task.FromResult(Create(device));
             };
 
             payload.SetId = async (dynamic input) => {
                 return await Task.Run(() => {
                     device.Id = (string)input;
-                    return PayloadFactory.Create(device);
+                    return Create(device);
                 });
             };
 

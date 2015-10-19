@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using Zetta.Core.Tests.Helpers;
 using Zetta.Core.Interop;
+using Zetta.Core.Tests.Helpers;
 
 namespace Zetta.Core.Tests {
     [TestFixture]

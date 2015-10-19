@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Castle.DynamicProxy;
-using System.Collections.Generic;
 using Zetta.Core.Interop;
 
 namespace Zetta.Core {
