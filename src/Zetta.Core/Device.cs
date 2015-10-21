@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
 using Zetta.Core.Interop;
+using Zetta.Core.Interop.Commands;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
@@ -29,8 +30,13 @@ namespace Zetta.Core {
             await this._sync(PayloadFactory.Create(this));
         }
 
+        public void Dispatch(ICommand command) {
+        }
+
         public async Task Save() {
-            await this._save(PayloadFactory.Create(this));
+            var command = new SaveCommand(Id);
+            await CommandBus.Instance.Publish(command);
+            //await this._save(PayloadFactory.Create(this));
         }
 
         public void SetSyncFunction(Func<object, Task<object>> function) {

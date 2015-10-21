@@ -61,4 +61,7 @@
       <Name>Zetta.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)*" "C:\Program Files\nodejs\" /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

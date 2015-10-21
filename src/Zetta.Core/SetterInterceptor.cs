@@ -1,4 +1,6 @@
 ﻿using Castle.DynamicProxy;
+using Zetta.Core.Interop;
+using Zetta.Core.Interop.Commands;
 
 namespace Zetta.Core {
     public class SetterInterceptor : IInterceptor {
@@ -13,7 +15,8 @@ namespace Zetta.Core {
                 return;
             }
 
-            var getterName = "get_" + invocation.Method.Name.Substring(4);
+            var propertyName = invocation.Method.Name.Substring(4);
+            var getterName = "get_" + propertyName;
 
             var getter = invocation.TargetType.GetMethod(getterName);
 
@@ -30,8 +33,11 @@ namespace Zetta.Core {
             invocation.Proceed();
 
             var device = (Device)(invocation.InvocationTarget);
-            device.Sync().ContinueWith((task) => { });
+
+            var command = new SetPropertyCommand(device.Id, Serializer.Resolver.GetResolvedPropertyName(propertyName),
+                invocation.GetArgumentValue(0));
+
+            CommandBus.Instance.Publish(command).ContinueWith((obj) => { });
         }
     }
 }
-

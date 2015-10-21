@@ -102,10 +102,35 @@ DotNetScout.prototype.init = function(next) {
     }
   }
 
-  this._interop(options, function(err, result) {
+  this._interop(options, function(err, bus) {
     if (err) {
       console.log(err);
     }
+
+    // wire up command bus
+    bus.On({
+      type: 'SetPropertyCommand',
+      subscriber: function(command, callback) {
+        var device = self.server._jsDevices[command.DeviceId];
+        device[command.PropertyName] = command.PropertyValue;
+
+        callback();
+      }
+    }, function (err) {
+      if (err) {
+      }
+    });
+
+    bus.On({
+      type: 'SaveCommand',
+      subscriber: function (command, callback) {
+        var device = self.server._jsDevices[command.DeviceId];
+        device.save(callback);
+      }
+    }, function (err) {
+      if (err) {
+      }
+    });
 
     next();
   });

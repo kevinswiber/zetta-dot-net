@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Linq;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace Zetta.Core.Interop {
     public class Serializer {
@@ -18,8 +21,30 @@ namespace Zetta.Core.Interop {
             return JsonConvert.DeserializeObject<T>(json, _settings);
         }
 
-        public static T DeserializeArray<T>(string json) where T : IEnumerable<Device> {
-            return JsonConvert.DeserializeObject<T>(json, _settings);
+        public static IEnumerable<T> DeserializeArray<T>(string json) where T : Device {
+            //return JsonConvert.DeserializeObject<T>(json, _settings);
+            var propertyMap = typeof(T).GetProperties()
+                .Select((prop) => prop.Name)
+                .ToDictionary(Serializer.Resolver.GetResolvedPropertyName);
+
+            var objects = JArray.Parse(json).Children<JObject>();
+            var deserialized = objects.Select((obj) => {
+                var device = DeviceProxy.Create<T>();
+                obj.Properties().ToList().ForEach((prop) => {
+                    var name = prop.Name;
+                    if (propertyMap.ContainsKey(name)) {
+                        var clrPropertyName = propertyMap[name];
+                        var clrProperty = typeof(T).GetProperty(clrPropertyName);
+
+                        var savedValue = Convert.ChangeType(prop.Value, clrProperty.PropertyType);
+                        clrProperty.SetValue(device, savedValue);
+                    }
+                });
+
+                return device;
+            }).ToArray();
+
+            return deserialized.AsEnumerable();
         }
 
         public static CamelCasePropertyNamesContractResolver Resolver = new CamelCasePropertyNamesContractResolver();

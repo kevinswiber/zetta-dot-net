@@ -20,6 +20,10 @@ namespace Zetta.Core.Interop {
                 return Create(device);
             };
 
+            /*payload.On = async (dynamic input) => {
+                return null;
+            };*/
+
             payload.OnSave = async (dynamic input) => {
                 return await Task.Run(() => {
                     device.SetSaveFunction((Func<object, Task<object>>)input);

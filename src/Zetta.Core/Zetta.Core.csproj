@@ -39,6 +39,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interop\CommandBus.cs" />
+    <Compile Include="Interop\Commands\SaveCommand.cs" />
+    <Compile Include="Interop\Commands\SetPropertyCommand.cs" />
+    <Compile Include="Interop\ICommand.cs" />
     <Compile Include="Interop\Payload.cs" />
     <Compile Include="Interop\PayloadFactory.cs" />
     <Compile Include="Interop\Serializer.cs" />

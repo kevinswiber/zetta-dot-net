@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Zetta.Core;
+using Zetta.Core.Interop;
 
 namespace Zetta.Example {
     public class Startup {
@@ -10,7 +11,7 @@ namespace Zetta.Example {
             await loader.Use(new PhotocellScout());
             await loader.Use(new DisplayScout());
 
-            return null;
+            return CommandBus.Instance;
         }
     }
 }

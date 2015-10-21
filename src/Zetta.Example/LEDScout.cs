@@ -9,6 +9,7 @@ namespace Zetta.Example {
             var results = await Server.Find<LED>("where type=\"led\"");
 
             if (results.Count() > 0) {
+                var first = results.First();
                 await Provision(results.First());
             } else {
                 await Discover(Device.Create<LED>());
