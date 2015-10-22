@@ -15,26 +15,6 @@ namespace Zetta.Core.Interop {
             payload.Allowed = device._allowed;
             payload.Transitions = device._transitions;
 
-            payload.OnSync = async (dynamic input) => {
-                await Task.Run(() => device.SetSyncFunction((Func<object, Task<object>>)input));
-                return Create(device);
-            };
-
-            /*payload.On = async (dynamic input) => {
-                return null;
-            };*/
-
-            payload.OnSave = async (dynamic input) => {
-                return await Task.Run(() => {
-                    device.SetSaveFunction((Func<object, Task<object>>)input);
-                    return Create(device);
-                });
-            };
-
-            payload.Fetch = async (dynamic input) => {
-                return await Task.FromResult(Create(device));
-            };
-
             payload.SetId = async (dynamic input) => {
                 return await Task.Run(() => {
                     device.Id = (string)input;
@@ -46,7 +26,7 @@ namespace Zetta.Core.Interop {
             if (!_monitorsCache.ContainsKey(type)) {
                 _monitorsCache[type] = type.GetProperties().Where((info) => {
                     return info.GetCustomAttributes(true)
-                            .Where((attribute) => attribute is MonitorAttribute).Count() > 0;
+                            .Where((attribute) => attribute is MonitorAttribute).Any();
                 }).Select((info) => info.Name)
                   .Select((name) => Serializer.Resolver.GetResolvedPropertyName(name)).ToList();
             }

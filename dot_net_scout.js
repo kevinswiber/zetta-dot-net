@@ -42,25 +42,6 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      payload.OnSync(function(result, callback2) {
-        result.properties = JSON.parse(result.Properties);
-        Object.keys(result.properties).forEach(function(key) {
-          machine[key] = result.properties[key];
-        });
-
-        callback2();
-      });
-
-      payload.OnSave(function(result, callback2) {
-        result.properties = JSON.parse(result.Properties);
-
-        Object.keys(result.properties).forEach(function(key) {
-          machine[key] = result.properties[key];
-        });
-
-        machine.save(callback2);
-      });
-
       payload.SetId(machine.id, callback);
     },
     provision: function(payload, callback) {
@@ -76,26 +57,6 @@ DotNetScout.prototype.init = function(next) {
 
       Object.keys(payload.properties).forEach(function(key) {
         machine[key] = payload.properties[key];
-      });
-
-      payload.OnSync(function(result, callback2) {
-        result.properties = JSON.parse(result.Properties);
-
-        Object.keys(result.properties).forEach(function(key) {
-          machine[key] = result.properties[key];
-        });
-
-        callback2();
-      });
-
-      payload.OnSave(function(result, callback2) {
-        result.properties = JSON.parse(result.Properties);
-
-        Object.keys(result.properties).forEach(function(key) {
-          machine[key] = result.properties[key];
-        });
-
-        machine.save(callback2);
       });
 
       callback();

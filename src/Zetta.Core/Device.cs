@@ -15,9 +15,6 @@ namespace Zetta.Core {
         [JsonIgnore]
         public IDictionary<string, TransitionValue> _transitions = new Dictionary<string, TransitionValue>();
 
-        private Func<object, Task<object>> _sync;
-        private Func<object, Task<object>> _save;
-
         protected void When(string state, string[] allow) {
             _allowed.Add(state, allow);
         }
@@ -26,25 +23,9 @@ namespace Zetta.Core {
             When(state, new string[] { allow });
         }
 
-        public async Task Sync() {
-            await this._sync(PayloadFactory.Create(this));
-        }
-
-        public void Dispatch(ICommand command) {
-        }
-
         public async Task Save() {
             var command = new SaveCommand(Id);
             await CommandBus.Instance.Publish(command);
-            //await this._save(PayloadFactory.Create(this));
-        }
-
-        public void SetSyncFunction(Func<object, Task<object>> function) {
-            _sync = function;
-        }
-
-        public void SetSaveFunction(Func<object, Task<object>> function) {
-            _save = function;
         }
 
         public override int GetHashCode() {
