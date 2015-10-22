@@ -8,13 +8,17 @@ namespace Zetta.Core.Tests {
     public class ServerTests {
         [Test]
         public async Task Find_Executes_Set_Function() {
+            var hasRun = false;
+
             var server = new Server();
             server.SetFindFunction((input) => {
-                Assert.IsTrue(true);
+                hasRun = true;
                 return Task.Run(() => (object)"[]");
             });
 
-            await server.Find<LED>("n/a");
+            await server.Find<LED>("n/a").ContinueWith((input) => {
+                Assert.That(hasRun, Is.True);
+            });
         }
 
         [Test]
@@ -28,9 +32,9 @@ namespace Zetta.Core.Tests {
 
             var led = results.First();
 
-            Assert.IsTrue(led is Device);
-            Assert.AreEqual("123", led.Id);
-            Assert.AreEqual("led", led.Type);
+            Assert.That(led, Is.AssignableTo<Device>());
+            Assert.That(led.Id, Is.EqualTo("123"));
+            Assert.That(led.Type, Is.EqualTo("led"));
         }
 
         [Test]
@@ -44,7 +48,7 @@ namespace Zetta.Core.Tests {
 
             var led = results.First();
 
-            Assert.IsTrue(DeviceProxy.IsProxy(led));
+            Assert.That(DeviceProxy.IsProxy(led), Is.True);
         }
     }
 }

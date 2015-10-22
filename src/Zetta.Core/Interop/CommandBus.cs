@@ -12,7 +12,7 @@ namespace Zetta.Core.Interop {
         private static object _syncRoot = new object();
 
         private readonly IDictionary<string, Type> _typeLookup = new Dictionary<string, Type>();
-        private readonly IDictionary<Type, IList<Action<ICommand>>> _subscribers =
+        private IDictionary<Type, IList<Action<ICommand>>> _subscribers =
             new ConcurrentDictionary<Type, IList<Action<ICommand>>>();
 
         public Func<object, Task<object>> On;
@@ -64,6 +64,10 @@ namespace Zetta.Core.Interop {
             subscribers.ForEach((task) => task.Start());
 
             await Task.WhenAll(subscribers);
+        }
+
+        public void RemoveAllSubscriptions() {
+            _subscribers = new ConcurrentDictionary<Type, IList<Action<ICommand>>>();
         }
 
         public static CommandBus Instance {

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using Zetta.Core.Interop;
+using Zetta.Core.Interop.Commands;
 
 namespace Zetta.Core.Tests {
     [TestFixture]
@@ -11,22 +12,27 @@ namespace Zetta.Core.Tests {
 
         [Test]
         [Timeout(1000)]
-        public async Task Fires_Sync_Function_On_Device_Property_Set() {
+        public async Task Publishes_SetPropertyCommand_On_Device_Property_Set() {
             var source = new TaskCompletionSource<bool>();
             var dummy = DeviceProxy.Create<Dummy>();
 
-            dummy.SetSyncFunction((input) => {
-                var device = Serializer.Deserialize<Dummy>(((Payload)input).Properties);
+            CommandBus.Instance.Subscribe<SetPropertyCommand>((command) => {
+                var c = (SetPropertyCommand)command;
 
-                Assert.AreEqual(3, device.Value);
+                Assert.That(c.PropertyName, Is.EqualTo("value"));
+                Assert.That(c.PropertyValue, Is.EqualTo(3));
+
                 source.SetResult(true);
-
-                return null;
             });
 
             dummy.Value = 3;
 
             await source.Task;
+        }
+
+        [TearDown]
+        public void TearDown() {
+            CommandBus.Instance.RemoveAllSubscriptions();
         }
     }
 }

@@ -12,8 +12,10 @@ namespace Zetta.Core.Tests {
             var input = new MockInput();
             var server = new MockServer();
 
+            var hasRun = false;
+
             input.discover = (obj) => {
-                Assert.IsTrue(true);
+                hasRun = true;
                 return Task.Run(() => (object)null);
             };
 
@@ -24,7 +26,9 @@ namespace Zetta.Core.Tests {
             input.server = server;
 
             var loader = ScoutLoader.Create(input);
-            await loader.Use(new LEDScout());
+            await loader.Use(new LEDScout()).ContinueWith((i) => {
+                Assert.That(hasRun, Is.True);
+            });
         }
 
         [Test]
@@ -32,8 +36,10 @@ namespace Zetta.Core.Tests {
             var input = new MockInput();
             var server = new MockServer();
 
+            var hasRun = false;
+
             input.provision = (obj) => {
-                Assert.IsTrue(true);
+                hasRun = true;
                 return Task.Run(() => (object)null);
             };
 
@@ -44,7 +50,9 @@ namespace Zetta.Core.Tests {
             input.server = server;
 
             var loader = ScoutLoader.Create(input);
-            await loader.Use(new LEDScout());
+            await loader.Use(new LEDScout()).ContinueWith((i) => {
+                Assert.That(hasRun, Is.True);
+            });
         }
 
         [Test]
@@ -56,7 +64,7 @@ namespace Zetta.Core.Tests {
                 var interop = (Payload)obj;
                 var json = JObject.Parse(interop.Properties);
 
-                Assert.AreEqual("led", json.GetValue("type").ToString());
+                Assert.That(json.GetValue("type").ToString(), Is.EqualTo("led"));
 
                 return Task.Run(() => (object)null);
             };
@@ -80,7 +88,7 @@ namespace Zetta.Core.Tests {
                 var interop = (Payload)obj;
                 var json = JObject.Parse(interop.Properties);
 
-                Assert.AreEqual("led", json.GetValue("type").ToString());
+                Assert.That(json.GetValue("type").ToString(), Is.EqualTo("led"));
 
                 return Task.Run(() => (object)null);
             };
