@@ -74,7 +74,7 @@ namespace Zetta.Core.Tests {
         public void Create_Returns_Device_Proxy() {
             var device = Device.Create<Dummy>();
 
-            Assert.That(device, Is.AssignableTo<Dummy>());
+            Assert.That(device, Is.InstanceOf<Dummy>());
             Assert.That(DeviceProxy.IsProxy(device), Is.True);
         }
 

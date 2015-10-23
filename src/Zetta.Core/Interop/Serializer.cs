@@ -11,6 +11,7 @@ namespace Zetta.Core.Interop {
 
         static Serializer() {
             _settings.ContractResolver = Resolver;
+            _settings.NullValueHandling = NullValueHandling.Include;
         }
 
         public static string Serialize<T>(T device) where T : Device {
@@ -37,6 +38,10 @@ namespace Zetta.Core.Interop {
                         var clrProperty = typeof(T).GetProperty(clrPropertyName);
 
                         var savedValue = Convert.ChangeType(prop.Value, clrProperty.PropertyType);
+                        if (prop.Value.Type == JTokenType.Null) {
+                            savedValue = null;
+                        }
+
                         clrProperty.SetValue(device, savedValue);
                     }
                 });
@@ -47,6 +52,7 @@ namespace Zetta.Core.Interop {
             return deserialized.AsEnumerable();
         }
 
-        public static CamelCasePropertyNamesContractResolver Resolver = new CamelCasePropertyNamesContractResolver();
+        //public static CamelCasePropertyNamesContractResolver Resolver = new CamelCasePropertyNamesContractResolver();
+        public static ZettaInteropContractResolver Resolver = new ZettaInteropContractResolver();
     }
 }

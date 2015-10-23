@@ -9,6 +9,7 @@ namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
     public abstract class Device {
         public Device() {
+            State = null;
             Allowed = new Dictionary<string, string[]>();
             Transitions = new Dictionary<string, TransitionValue>();
         }
@@ -158,8 +159,12 @@ namespace Zetta.Core {
             return wrappedHandler;
         }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public virtual string Id { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public virtual string Name { get; set; }
         public virtual string Type { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public virtual string State { get; set; }
 
         [JsonIgnore]

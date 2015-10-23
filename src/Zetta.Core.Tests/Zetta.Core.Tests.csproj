@@ -43,6 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeviceProxyTests.cs" />
     <Compile Include="DeviceTests.cs" />
     <Compile Include="Helpers\LED.cs" />
     <Compile Include="Helpers\LEDScout.cs" />

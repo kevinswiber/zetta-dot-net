@@ -1,5 +1,4 @@
-﻿using System;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 
 namespace Zetta.Core {
     public class DeviceProxy {

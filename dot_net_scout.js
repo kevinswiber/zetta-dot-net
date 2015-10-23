@@ -29,12 +29,6 @@ DotNetScout.prototype.init = function(next) {
     },
     discover: function(payload, callback) {
       payload.properties = JSON.parse(payload.Properties);
-      if (payload.properties.name === null) {
-        delete payload.properties.name;
-      }
-      if (payload.properties.id === null) {
-        delete payload.properties.id;
-      }
 
       var machine = self.discover(DotNetDevice, payload);
 
@@ -46,12 +40,6 @@ DotNetScout.prototype.init = function(next) {
     },
     provision: function(payload, callback) {
       payload.properties = JSON.parse(payload.Properties);
-      if (payload.properties.name === null) {
-        delete payload.properties.name;
-      }
-      if (payload.properties.id === null) {
-        delete payload.properties.id;
-      }
 
       var machine = self.provision({ id: payload.properties.id }, DotNetDevice, payload);
 

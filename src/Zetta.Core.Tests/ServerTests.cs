@@ -32,7 +32,7 @@ namespace Zetta.Core.Tests {
 
             var led = results.First();
 
-            Assert.That(led, Is.AssignableTo<Device>());
+            Assert.That(led, Is.InstanceOf<Device>());
             Assert.That(led.Id, Is.EqualTo("123"));
             Assert.That(led.Type, Is.EqualTo("led"));
         }
