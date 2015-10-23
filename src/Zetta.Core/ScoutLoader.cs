@@ -20,10 +20,27 @@ namespace Zetta.Core {
         }
 
         public async Task<ScoutLoader> Use<T>(T scout) where T : Scout {
-            scout.SetDiscoverFunction(_discoverFunction);
-            scout.SetProvisionFunction(_provisionFunction);
+            Setup(scout);
 
-            scout.Server = _server;
+            await scout.Initialize();
+
+            return this;
+        }
+
+        public async Task<ScoutLoader> Use<T>() where T : Scout {
+            var scout = Activator.CreateInstance<T>();
+
+            Setup(scout);
+
+            await scout.Initialize();
+
+            return this;
+        }
+
+        public async Task<ScoutLoader> Use<T>(params object[] args) where T : Scout {
+            var scout = (T)Activator.CreateInstance(typeof(T), args);
+
+            Setup(scout);
 
             await scout.Initialize();
 
@@ -32,6 +49,13 @@ namespace Zetta.Core {
 
         public static ScoutLoader Create(dynamic input) {
             return new ScoutLoader(input);
+        }
+
+        private void Setup(Scout scout) {
+            scout.SetDiscoverFunction(_discoverFunction);
+            scout.SetProvisionFunction(_provisionFunction);
+
+            scout.Server = _server;
         }
     }
 }

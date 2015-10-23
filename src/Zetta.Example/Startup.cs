@@ -7,9 +7,9 @@ namespace Zetta.Example {
         public async Task<object> Invoke(dynamic input) {
             var loader = ScoutLoader.Create(input);
 
-            await loader.Use(new LEDScout());
-            await loader.Use(new PhotocellScout());
-            await loader.Use(new DisplayScout());
+            await loader.Use<LEDScout>();
+            await loader.Use<PhotocellScout>();
+            await loader.Use<DisplayScout>();
 
             return CommandBus.Instance;
         }
