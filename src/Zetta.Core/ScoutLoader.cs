@@ -30,9 +30,7 @@ namespace Zetta.Core {
         public async Task<ScoutLoader> Use<T>() where T : Scout {
             var scout = Activator.CreateInstance<T>();
 
-            Setup(scout);
-
-            await scout.Initialize();
+            await Use(scout);
 
             return this;
         }
@@ -40,9 +38,7 @@ namespace Zetta.Core {
         public async Task<ScoutLoader> Use<T>(params object[] args) where T : Scout {
             var scout = (T)Activator.CreateInstance(typeof(T), args);
 
-            Setup(scout);
-
-            await scout.Initialize();
+            await Use(scout);
 
             return this;
         }

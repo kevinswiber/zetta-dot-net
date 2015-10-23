@@ -49,7 +49,9 @@
     <Compile Include="Helpers\LEDScout.cs" />
     <Compile Include="Helpers\MockInput.cs" />
     <Compile Include="Helpers\MockServer.cs" />
+    <Compile Include="Interop\SerializerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoutLoaderTests.cs" />
     <Compile Include="ScoutTests.cs" />
     <Compile Include="ServerTests.cs" />
     <Compile Include="SetterInterceptorTests.cs" />

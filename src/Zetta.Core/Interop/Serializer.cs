@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Linq;
-using Newtonsoft.Json.Linq;
-using System;
+using Newtonsoft.Json;
 
 namespace Zetta.Core.Interop {
     public class Serializer {
@@ -18,15 +15,20 @@ namespace Zetta.Core.Interop {
             return JsonConvert.SerializeObject(device, Formatting.None, _settings);
         }
 
-        public static T Deserialize<T>(string json) where T : Device {
-            return JsonConvert.DeserializeObject<T>(json, _settings);
-        }
-
         public static IEnumerable<T> DeserializeArray<T>(string json) where T : Device {
-            //return JsonConvert.DeserializeObject<T>(json, _settings);
-            var propertyMap = typeof(T).GetProperties()
+            return JsonConvert.DeserializeObject<IEnumerable<T>>(json)
+                .Select((device) => DeviceProxy.InterceptDevice(device))
+                .ToArray().AsEnumerable();
+
+            // TODO: Remove old code.  Don't think it's needed anymore.
+            //       The below code deserializes directly into a proxy
+            //       instead of the above, which a) deserializes into a
+            //       normal device type and then b) wraps that device
+            //       in a proxy.
+
+            /*var propertyMap = typeof(T).GetProperties()
                 .Select((prop) => prop.Name)
-                .ToDictionary(Serializer.Resolver.GetResolvedPropertyName);
+                .ToDictionary(Resolver.GetResolvedPropertyName);
 
             var objects = JArray.Parse(json).Children<JObject>();
             var deserialized = objects.Select((obj) => {
@@ -37,6 +39,7 @@ namespace Zetta.Core.Interop {
                         var clrPropertyName = propertyMap[name];
                         var clrProperty = typeof(T).GetProperty(clrPropertyName);
 
+                        // TODO: Make this recursive through sub-objects, arrays.
                         var savedValue = Convert.ChangeType(prop.Value, clrProperty.PropertyType);
                         if (prop.Value.Type == JTokenType.Null) {
                             savedValue = null;
@@ -49,10 +52,10 @@ namespace Zetta.Core.Interop {
                 return device;
             }).ToArray();
 
-            return deserialized.AsEnumerable();
+            return deserialized.AsEnumerable();*/
         }
 
-        //public static CamelCasePropertyNamesContractResolver Resolver = new CamelCasePropertyNamesContractResolver();
-        public static ZettaInteropContractResolver Resolver = new ZettaInteropContractResolver();
+        public static ZettaInteropContractResolver Resolver =
+            new ZettaInteropContractResolver();
     }
 }
