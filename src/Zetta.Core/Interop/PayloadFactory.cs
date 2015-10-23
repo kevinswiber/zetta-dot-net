@@ -7,8 +7,7 @@ namespace Zetta.Core.Interop {
     public class PayloadFactory {
         private static IDictionary<Type, IList<string>> _monitorsCache = new Dictionary<Type, IList<string>>();
 
-        public static Payload Create<T>(T proxiedDevice) where T : Device {
-            var device = DeviceProxy.RemoveProxy(proxiedDevice);
+        public static Payload Create<T>(T device) where T : Device {
 
             var payload = new Payload();
             payload.Properties = Serializer.Serialize(device);

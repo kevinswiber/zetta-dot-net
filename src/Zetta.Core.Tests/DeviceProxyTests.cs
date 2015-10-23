@@ -31,9 +31,8 @@ namespace Zetta.Core.Tests {
 
         [Test]
         public void InterceptDevice_Associates_SetterIntercepter_With_Proxy() {
-            var device = DeviceProxy.InterceptDevice(new Dummy());
-            var type = device.GetType();
-            var interceptors = type.GetField("__interceptors").GetValue(device) as IInterceptor[];
+            var device = DeviceProxy.InterceptDevice(new Dummy()) as IProxyTargetAccessor;
+            var interceptors = device.GetInterceptors();
 
             Assert.That(interceptors, Has.Length.EqualTo(1));
             Assert.That(interceptors[0], Is.InstanceOf<SetterInterceptor>());

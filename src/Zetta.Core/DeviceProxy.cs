@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using Microsoft.CSharp.RuntimeBinder;
 
 namespace Zetta.Core {
     public class DeviceProxy {
@@ -22,14 +23,6 @@ namespace Zetta.Core {
 
         public static bool IsProxy<T>(T device) {
             return ProxyUtil.IsProxy(device);
-        }
-
-        public static T RemoveProxy<T>(T device) where T : Device {
-            if (ProxyUtil.IsProxy(device)) {
-                return (T)ProxyUtil.GetUnproxiedInstance(device);
-            } else {
-                return device;
-            }
         }
     }
 }
