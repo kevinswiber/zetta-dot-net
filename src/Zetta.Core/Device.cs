@@ -35,48 +35,48 @@ namespace Zetta.Core {
             return DeviceProxy.Create<T>(args);
         }
 
+        protected void Map(string transition, TransitionValue transitionValue) {
+            Transitions.Add(transition, transitionValue);
+        }
+
         protected void Map(string transition, Func<Task> function) {
             var value = new TransitionValue { Handler = WrapHandler(function), Fields = null };
             Transitions.Add(transition, value);
         }
 
-        protected void Map(string transition, TransitionValue transitionValue) {
-            Transitions.Add(transition, transitionValue);
-        }
-
         protected void Map<T1>(string transition, Func<T1, Task> function, Field field) {
             var value = 
-                new TransitionValue { Handler = WrapHandler<T1>(function), Fields = new Field[] { field } };
+                new TransitionValue { Handler = WrapHandler(function), Fields = new Field[] { field } };
             Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2>(string transition, Func<T1, T2, Task> function, IEnumerable<Field> fields) {
             var value = 
-                new TransitionValue { Handler = WrapHandler<T1, T2>(function), Fields = fields };
+                new TransitionValue { Handler = WrapHandler(function), Fields = fields };
             Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3>(string transition, Func<T1, T2, T3, Task> function, IEnumerable<Field> fields) {
             var value = 
-                new TransitionValue { Handler = WrapHandler<T1, T2, T3>(function), Fields = fields };
+                new TransitionValue { Handler = WrapHandler(function), Fields = fields };
             Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3, T4>(string transition, Func<T1, T2, T3, T4, Task> function, IEnumerable<Field> fields) {
             var value = 
-                new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4>(function), Fields = fields };
+                new TransitionValue { Handler = WrapHandler(function), Fields = fields };
             Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3, T4, T5>(string transition, Func<T1, T2, T3, T4, T5, Task> function, IEnumerable<Field> fields) {
             var value = 
-                new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4, T5>(function), Fields = fields };
+                new TransitionValue { Handler = WrapHandler(function), Fields = fields };
             Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3, T4, T5, T6>(string transition, Func<T1, T2, T3, T4, T5, T6, Task> function, IEnumerable<Field> fields) {
             var value = 
-                new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4, T5, T6>(function), Fields = fields };
+                new TransitionValue { Handler = WrapHandler(function), Fields = fields };
             Transitions.Add(transition, value);
         }
 
