@@ -107,6 +107,7 @@ namespace Zetta.Core.Tests {
 
                 Assert.That(c.DeviceId, Is.EqualTo("1234"));
 
+                CommandBus.Instance.RemoveAllSubscriptions();
                 source.SetResult(true);
             });
 
