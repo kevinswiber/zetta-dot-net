@@ -1,8 +1,4 @@
-﻿using System;
-using Zetta.Core;
-using System.Threading.Tasks;
-
-namespace Zetta.Core.Tests.Helpers {
+﻿namespace Zetta.Core.Tests.Helpers {
     public class LED : Device {
         public LED() {
             State = "off";

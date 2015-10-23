@@ -2,9 +2,16 @@ var util = require('util');
 var Device = require('zetta-device');
 
 var DotNetDevice = module.exports = function(config) {
-  this._id = config.id;
-  this._config = config;
   Device.call(this);
+
+  var self = this;
+  if (config && config.properties) {
+    Object.keys(config.properties).forEach(function(key) {
+      self[key] = config.properties[key];
+    });
+  }
+
+  this._config = config;
 };
 util.inherits(DotNetDevice, Device);
 
@@ -21,7 +28,6 @@ DotNetDevice.prototype.init = function(config) {
 
   var self = this;
 
-  // need to account for fields, maybe through attributes
   Object.keys(this._config.Transitions).forEach(function(key) {
     var handler = function() {
       var args = Array.prototype.slice.call(arguments);
@@ -31,14 +37,6 @@ DotNetDevice.prototype.init = function(config) {
           cb(err);
           return;
         }
-
-        result.properties = JSON.parse(result.Properties);
-
-        Object.keys(result.properties).forEach(function(key) {
-          if (self[key] !== result.properties[key]) {
-            self[key] = result.properties[key];
-          }
-        });
 
         cb();
       });

@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Linq.Expressions;
 using Zetta.Core.Interop;
 using Zetta.Core.Interop.Commands;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
     public abstract class Device {
-        [JsonIgnore]
-        public IDictionary<string, string[]> _allowed = new Dictionary<string, string[]>();
-        [JsonIgnore]
-        public IDictionary<string, TransitionValue> _transitions = new Dictionary<string, TransitionValue>();
+        public Device() {
+            Allowed = new Dictionary<string, string[]>();
+            Transitions = new Dictionary<string, TransitionValue>();
+        }
 
         protected void When(string state, string[] allow) {
-            _allowed.Add(state, allow);
+            Allowed.Add(state, allow);
         }
 
         protected void When(string state, string allow) {
@@ -39,47 +37,47 @@ namespace Zetta.Core {
 
         protected void Map(string transition, Func<Task> function) {
             var value = new TransitionValue { Handler = WrapHandler(function), Fields = null };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         protected void Map(string transition, TransitionValue transitionValue) {
-            _transitions.Add(transition, transitionValue);
+            Transitions.Add(transition, transitionValue);
         }
 
         protected void Map<T1>(string transition, Func<T1, Task> function, Field field) {
             var value = 
                 new TransitionValue { Handler = WrapHandler<T1>(function), Fields = new Field[] { field } };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2>(string transition, Func<T1, T2, Task> function, IEnumerable<Field> fields) {
             var value = 
                 new TransitionValue { Handler = WrapHandler<T1, T2>(function), Fields = fields };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3>(string transition, Func<T1, T2, T3, Task> function, IEnumerable<Field> fields) {
             var value = 
                 new TransitionValue { Handler = WrapHandler<T1, T2, T3>(function), Fields = fields };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3, T4>(string transition, Func<T1, T2, T3, T4, Task> function, IEnumerable<Field> fields) {
             var value = 
                 new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4>(function), Fields = fields };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3, T4, T5>(string transition, Func<T1, T2, T3, T4, T5, Task> function, IEnumerable<Field> fields) {
             var value = 
                 new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4, T5>(function), Fields = fields };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         protected void Map<T1, T2, T3, T4, T5, T6>(string transition, Func<T1, T2, T3, T4, T5, T6, Task> function, IEnumerable<Field> fields) {
             var value = 
                 new TransitionValue { Handler = WrapHandler<T1, T2, T3, T4, T5, T6>(function), Fields = fields };
-            _transitions.Add(transition, value);
+            Transitions.Add(transition, value);
         }
 
         private Func<object, Task<object>> WrapHandler(Func<Task> function) {
@@ -160,13 +158,13 @@ namespace Zetta.Core {
             return wrappedHandler;
         }
 
-        [JsonProperty]
         public virtual string Id { get; set; }
-
-        [JsonProperty]
         public virtual string Type { get; set; }
-
-        [JsonProperty]
         public virtual string State { get; set; }
+
+        [JsonIgnore]
+        public IDictionary<string, string[]> Allowed { get; set; }
+        [JsonIgnore]
+        public IDictionary<string, TransitionValue> Transitions { get; set; }
     }
 }

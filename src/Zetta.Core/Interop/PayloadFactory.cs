@@ -12,8 +12,8 @@ namespace Zetta.Core.Interop {
 
             var payload = new Payload();
             payload.Properties = Serializer.Serialize(device);
-            payload.Allowed = device._allowed;
-            payload.Transitions = device._transitions;
+            payload.Allowed = device.Allowed;
+            payload.Transitions = device.Transitions;
 
             payload.SetId = async (dynamic input) => {
                 return await Task.Run(() => {
