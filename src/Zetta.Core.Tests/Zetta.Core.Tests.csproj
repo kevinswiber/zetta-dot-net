@@ -49,6 +49,7 @@
     <Compile Include="Helpers\LEDScout.cs" />
     <Compile Include="Helpers\MockInput.cs" />
     <Compile Include="Helpers\MockServer.cs" />
+    <Compile Include="Interop\PayloadFactoryTests.cs" />
     <Compile Include="Interop\SerializerTests.cs" />
     <Compile Include="Interop\ZettaInteropContractResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
