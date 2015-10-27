@@ -53,6 +53,35 @@ DotNetScout.prototype.init = function(next) {
       prepare: function (payload, callback) {
         payload.properties = JSON.parse(payload.Properties);
         var machine = self.server._jsDevices[payload.properties.id];
+
+        payload.SetAvailableFunction({
+          fn: function (obj, cb) {
+            cb(null, machine.available(obj.transition));
+          }
+        }, function (err) {
+          if (err) {
+            console.log('error calling available:', err);
+          }
+        });
+
+        payload.SetCallFunction({
+          fn: function (obj, cb) {
+            var transition = obj.transition;
+            //console.log("NODEJS: Calling", transition);
+            machine.call(transition, function (err) {
+              //console.log('IN CALLBACK FOR TRANSITION CALL');
+              if (err) {
+                console.log(err);
+              }
+              cb(err);
+            });
+          }
+        }, function(err) {
+          if (err) {
+            console.log('error calling call:', err);
+          }
+        });
+
         payload.SetCreateReadStream({
           fn: function (obj, cb) {
             var name = obj.name;
@@ -163,6 +192,10 @@ DotNetScout.prototype.init = function(next) {
         var device = self.server._jsDevices[command.DeviceId];
         device[command.PropertyName] = command.PropertyValue;
 
+        if (command.PropertyName === 'state') {
+          console.log('state set to:', command.PropertyValue);
+        }
+
         callback();
       }
     }, function (err) {
@@ -173,7 +206,9 @@ DotNetScout.prototype.init = function(next) {
     bus.On({
       type: 'SaveCommand',
       subscriber: function (command, callback) {
+        console.log('in save command');
         var device = self.server._jsDevices[command.DeviceId];
+        console.log('save state set to:', device.state);
         device.save(callback);
       }
     }, function (err) {

@@ -33,6 +33,7 @@ DotNetDevice.prototype.init = function(config) {
       var args = Array.prototype.slice.call(arguments);
       var cb = args.pop();
       self._config.Transitions[key].Handler(args, function(err, result) {
+        //console.log(result);
         if (err) {
           cb(err);
           return;
