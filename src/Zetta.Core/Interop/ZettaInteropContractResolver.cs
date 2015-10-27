@@ -10,7 +10,8 @@ namespace Zetta.Core.Interop {
     public class ZettaInteropContractResolver : CamelCasePropertyNamesContractResolver {
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization) {
             return base.CreateProperties(type, memberSerialization).Where((prop) => {
-                return prop.PropertyName != "__interceptors";
+                return prop.PropertyName != "__interceptors" &&
+                    prop.PropertyName != "__target";
             }).ToList();
         }
     }

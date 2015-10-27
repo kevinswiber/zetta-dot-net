@@ -25,6 +25,63 @@ DotNetScout.prototype.init = function(next) {
         });
       },
       observe: function(payload, callback) {
+        var query;
+        if (typeof payload.Query === 'string') {
+          query = self.server.ql(payload.Query);
+        } else if (Array.isArray(payload.Query)) {
+          query = payload.Query.map(function(q) {
+            if (typeof q === 'string') {
+              return self.server.ql(q);
+            } else if (typeof q === 'object') {
+              return self.server.where(q);
+            }
+          })
+        } else if (typeof payload.Query === 'object') {
+          query = self.server.where(payload.Query);
+        }
+
+        self.server.observe(query, function () {
+          payload.Callback(JSON.stringify(Array.prototype.slice.call(arguments).map(function (d) { return d.properties(); })), function (err) {
+            if (err) {
+              console.error('Error calling observe callback:', err);
+            }
+            // handle error;
+          });
+        });
+        callback();
+      },
+      prepare: function (payload, callback) {
+        payload.properties = JSON.parse(payload.Properties);
+        var machine = self.server._jsDevices[payload.properties.id];
+        payload.SetCreateReadStream({
+          fn: function (obj, cb) {
+            var name = obj.name;
+            var onData = obj.onData;
+
+            setImmediate(function() {
+              var stream = machine.createReadStream(name);
+              stream.on('data', function (data) {
+                onData(JSON.stringify(data));
+              });
+              stream.resume();
+            });
+            if (cb) {
+              cb();
+            }
+          }, function (err) {
+            if (err) {
+              callback(err);
+              return;
+            }
+            callback();
+          }
+        }, function (err) {
+          if (err) {
+            callback(err);
+          } else {
+            callback();
+          }
+        });
       }
     },
     discover: function(payload, callback) {
@@ -36,7 +93,31 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      payload.SetId(machine.id, callback);
+      payload.SetId(machine.id, function (err) {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        payload.SetCreateReadStream({
+          fn: function (name, onData) {
+            var stream = machine.createReadStream(name);
+            stream.onData(function (data) {
+              onData(JSON.stringify(data));
+            });
+          }, function (err) {
+            if (err) {
+            }
+          }
+        }, function (err) {
+          if (err) {
+            callback(err);
+          } else {
+            callback();
+          }
+        });
+      });
+
     },
     provision: function(payload, callback) {
       payload.properties = JSON.parse(payload.Properties);
@@ -47,7 +128,26 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      callback();
+      payload.SetCreateReadStream({
+        fn: function (name, onData) {
+          var stream = machine.createReadStream(name);
+          stream.onData(function (data) {
+            onData(JSON.stringify(data));
+          });
+        }, function (err) {
+          if (err) {
+            console.log('error setting create read stream function:', err);
+          }
+        }
+      }, function (err) {
+        if (err) {
+          callback(err);
+        } else {
+          callback();
+        }
+      });
+
+      //callback();
     }
   }
 

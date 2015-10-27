@@ -7,4 +7,12 @@ var assemblyFile = path.join(__dirname,
 
 zetta()
   .use(DotNetScout, { assemblyFile: assemblyFile })
+  /*.use(function(server) {
+    server.observe(server.where({ type: 'photocell' }), function(photocell) {
+      var stream = photocell.createReadStream('intensity');
+      stream.on('data', function(msg) {
+        console.log('data:', msg);
+      });
+    });
+  })*/
   .listen(process.env.PORT || 3000);

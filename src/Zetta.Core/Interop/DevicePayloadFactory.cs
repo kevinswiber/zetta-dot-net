@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace Zetta.Core.Interop {
-    public class PayloadFactory {
+    public class DevicePayloadFactory {
         private static IDictionary<Type, IList<string>> _monitorsCache = new Dictionary<Type, IList<string>>();
 
-        public static Payload Create<T>(T device) where T : Device {
+        public static DevicePayload Create<T>(T device) where T : Device {
 
-            var payload = new Payload();
+            var payload = new DevicePayload();
             payload.Properties = Serializer.Serialize(device);
             payload.Allowed = device.Allowed;
             payload.Transitions = device.Transitions;
@@ -19,6 +19,22 @@ namespace Zetta.Core.Interop {
                     device.Id = (string)input;
                     return Create(device);
                 });
+            };
+
+            payload.SetCreateReadStream = async (dynamic input) => {
+                var func = (Func<object, Task<object>>)input.fn;
+                device.SetCreateReadStreamFunction(async (name) => {
+                    var stream = new ObjectStream();
+                    Func<object, Task<object>> onDataFn = async (data) => {
+                        stream.Publish((string)data);
+                        return await Task.FromResult(0);
+                    };
+                    var fnInput = new { name = name, onData = onDataFn };
+                    await func.Invoke(fnInput);
+
+                    return stream;
+                });
+                return await Task.FromResult(0);
             };
 
             var type = typeof(T);

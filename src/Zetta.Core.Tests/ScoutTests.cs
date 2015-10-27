@@ -61,7 +61,7 @@ namespace Zetta.Core.Tests {
             var server = new MockServer();
 
             input.discover = (obj) => {
-                var interop = (Payload)obj;
+                var interop = (DevicePayload)obj;
                 var json = JObject.Parse(interop.Properties);
 
                 Assert.That(json.GetValue("type").ToString(), Is.EqualTo("led"));
@@ -85,7 +85,7 @@ namespace Zetta.Core.Tests {
             var server = new MockServer();
 
             input.provision = (obj) => {
-                var interop = (Payload)obj;
+                var interop = (DevicePayload)obj;
                 var json = JObject.Parse(interop.Properties);
 
                 Assert.That(json.GetValue("type").ToString(), Is.EqualTo("led"));

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 
 namespace Zetta.Core.Interop {
     public class Serializer {
@@ -15,8 +17,18 @@ namespace Zetta.Core.Interop {
             return JsonConvert.SerializeObject(device, Formatting.None, _settings);
         }
 
+        public static T Deserialize<T>(string json) where T : Device {
+            var obj = JsonConvert.DeserializeObject<T>(json, _settings);
+            return DeviceProxy.InterceptDevice(obj);
+        }
+
+        public static object Deserialize(Type type, string json) {
+            var obj = JsonConvert.DeserializeObject(json, type, _settings);
+            return DeviceProxy.InterceptDevice(type, Convert.ChangeType(obj, type));
+        }
+
         public static IEnumerable<T> DeserializeArray<T>(string json) where T : Device {
-            return JsonConvert.DeserializeObject<IEnumerable<T>>(json)
+            return JsonConvert.DeserializeObject<IEnumerable<T>>(json, _settings)
                 .Select((device) => DeviceProxy.InterceptDevice(device))
                 .ToArray().AsEnumerable();
 
@@ -53,6 +65,11 @@ namespace Zetta.Core.Interop {
             }).ToArray();
 
             return deserialized.AsEnumerable();*/
+        }
+
+        public static IEnumerable<Device> DeserializeArray(string json, Type[] types, int length) {
+            var objects = JArray.Parse(json).Children<JObject>();
+            return objects.Select((obj, index) => Deserialize(types[index], obj.ToString())).Cast<Device>().ToArray().AsEnumerable();
         }
 
         public static ZettaInteropContractResolver Resolver =

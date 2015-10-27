@@ -5,7 +5,7 @@ using Zetta.Core.Interop;
 
 namespace Zetta.Core.Tests.Interop {
     [TestFixture]
-    public class PayloadFactoryTests {
+    public class DevicePayloadFactoryTests {
         public class Dummy : Device {
             public Dummy() {
                 Type = "dummy";
@@ -33,7 +33,7 @@ namespace Zetta.Core.Tests.Interop {
         [Test]
         public void Create_Includes_Property_Values_As_JSON() {
             var device = Device.Create<Dummy>();
-            var payload = PayloadFactory.Create(device);
+            var payload = DevicePayloadFactory.Create(device);
 
             var properties = JObject.Parse(payload.Properties).Properties().ToArray();
             var names = properties.Select((p) => p.Name).ToArray();
@@ -59,7 +59,7 @@ namespace Zetta.Core.Tests.Interop {
         [Test]
         public void Create_Includes_Allowed_Dictionary() {
             var device = Device.Create<Dummy>();
-            var payload = PayloadFactory.Create(device);
+            var payload = DevicePayloadFactory.Create(device);
 
             Assert.That(payload.Allowed.Keys, Has.Member("on"));
             Assert.That(payload.Allowed.Keys, Has.Member("off"));
@@ -70,7 +70,7 @@ namespace Zetta.Core.Tests.Interop {
         [Test]
         public void Create_Includes_Transitions_Dictionary() {
             var device = Device.Create<Dummy>();
-            var payload = PayloadFactory.Create(device);
+            var payload = DevicePayloadFactory.Create(device);
 
             Assert.That(payload.Transitions.Keys, Has.Member("turn-on"));
             Assert.That(payload.Transitions.Keys, Has.Member("turn-off"));
@@ -81,7 +81,7 @@ namespace Zetta.Core.Tests.Interop {
         [Test]
         public void Create_Includes_Monitor_Properties() {
             var device = Device.Create<Dummy>();
-            var payload = PayloadFactory.Create(device);
+            var payload = DevicePayloadFactory.Create(device);
 
             Assert.That(payload.Monitors.ToArray(), Has.Length.EqualTo(1));
             Assert.That(payload.Monitors.First(), Is.EqualTo("streamingValue"));

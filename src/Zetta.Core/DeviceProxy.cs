@@ -20,6 +20,15 @@ namespace Zetta.Core {
             var proxy = _generator.CreateClassProxyWithTarget<T>(device, interceptor);
             return proxy;
         }
+        public static object InterceptDevice(System.Type type, object device) {
+            if (ProxyUtil.IsProxy(device)) {
+                return device;
+            }
+
+            var interceptor = new SetterInterceptor();
+            var proxy = _generator.CreateClassProxyWithTarget(type, device, interceptor);
+            return proxy;
+        }
 
         public static bool IsProxy<T>(T device) {
             return ProxyUtil.IsProxy(device);

@@ -13,7 +13,8 @@ namespace Zetta.Core {
             _server = new Server();
 
             _server.SetFindFunction((Func<object, Task<object>>)_input.server.find);
-            //_server.SetObserveFunction((Func<object, Task<object>>)_input.server.observe);
+            _server.SetObserveFunction((Func<object, Task<object>>)_input.server.observe);
+            _server.SetPrepareFunction((Func<object, Task<object>>)_input.server.prepare);
 
             _discoverFunction = (Func<object, Task<object>>)_input.discover;
             _provisionFunction = (Func<object, Task<object>>)_input.provision;

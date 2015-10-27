@@ -11,12 +11,12 @@ namespace Zetta.Core {
 
         public async Task Provision<T>(T device) where T : Device {
             EnsureType(device);
-            await _provision(PayloadFactory.Create(device));
+            await _provision(DevicePayloadFactory.Create(device));
         }
 
         public async Task Discover<T>(T device) where T : Device {
             EnsureType(device);
-            await _discover(PayloadFactory.Create(device));
+            await _discover(DevicePayloadFactory.Create(device));
         }
 
         public void SetProvisionFunction(Func<object, Task<object>> provision) {

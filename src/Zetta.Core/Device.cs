@@ -4,10 +4,13 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Zetta.Core.Interop;
 using Zetta.Core.Interop.Commands;
+using System.IO;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
     public abstract class Device {
+        private Func<string, Task<ObjectStream>> _createReadStream;
+
         public Device() {
             State = null;
             Allowed = new Dictionary<string, string[]>();
@@ -25,6 +28,14 @@ namespace Zetta.Core {
         public async Task Save() {
             var command = new SaveCommand(Id);
             await CommandBus.Instance.Publish(command);
+        }
+
+        public void SetCreateReadStreamFunction(Func<string, Task<ObjectStream>> func) {
+            _createReadStream = func;
+        }
+
+        public Task<ObjectStream> CreateReadStream(string name) {
+            return _createReadStream.Invoke(name);
         }
 
         public override int GetHashCode() {
@@ -84,7 +95,7 @@ namespace Zetta.Core {
         private Func<object, Task<object>> WrapHandler(Func<Task> function) {
             Func<object, Task<object>> wrappedHandler = async (input) => {
                 await function();
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -95,7 +106,7 @@ namespace Zetta.Core {
                 var parameters = (object[])input;
 
                 await function((T1)parameters[0]);
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -106,7 +117,7 @@ namespace Zetta.Core {
                 var parameters = (object[])input;
 
                 await function((T1)parameters[0], (T2)parameters[1]);
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -117,7 +128,7 @@ namespace Zetta.Core {
                 var parameters = (object[])input;
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2]);
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -129,7 +140,7 @@ namespace Zetta.Core {
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
                     (T4)parameters[3]);
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -141,7 +152,7 @@ namespace Zetta.Core {
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
                     (T4)parameters[3], (T5)parameters[4]);
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
@@ -153,7 +164,7 @@ namespace Zetta.Core {
 
                 await function((T1)parameters[0], (T2)parameters[1], (T3)parameters[2],
                     (T4)parameters[3], (T5)parameters[4], (T6)parameters[5]);
-                return PayloadFactory.Create(this);
+                return DevicePayloadFactory.Create(this);
             };
 
             return wrappedHandler;
