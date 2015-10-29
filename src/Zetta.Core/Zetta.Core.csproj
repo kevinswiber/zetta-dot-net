@@ -42,6 +42,7 @@
     <Compile Include="Interop\CommandBus.cs" />
     <Compile Include="Interop\Commands\SaveCommand.cs" />
     <Compile Include="Interop\Commands\SetPropertyCommand.cs" />
+    <Compile Include="Interop\DeviceConverter.cs" />
     <Compile Include="Interop\ICommand.cs" />
     <Compile Include="Interop\DevicePayload.cs" />
     <Compile Include="Interop\DevicePayloadFactory.cs" />
