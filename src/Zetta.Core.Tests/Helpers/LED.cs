@@ -1,6 +1,6 @@
 ﻿namespace Zetta.Core.Tests.Helpers {
     public class LED : Device {
-        public override void Initialize() {
+        public override void Init() {
             State = "off";
 
             When("on", allow: "turn-off");

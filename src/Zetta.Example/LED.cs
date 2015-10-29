@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Zetta.Example {
     public class LED : Device {
-        public override void Initialize() {
+        public override void Init() {
             State = "off";
 
             When("on", allow: "turn-off");

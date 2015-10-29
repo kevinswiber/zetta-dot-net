@@ -7,7 +7,7 @@ namespace Zetta.Core.Tests.Interop {
     [TestFixture]
     public class DevicePayloadFactoryTests {
         public class Dummy : Device {
-            public override void Initialize() {
+            public override void Init() {
                 Type = "dummy";
                 State = "off";
                 StreamingValue = 3;

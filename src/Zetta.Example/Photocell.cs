@@ -7,7 +7,7 @@ namespace Zetta.Example {
         private Timer _timer;
         private int _counter = 0;
 
-        public override void Initialize() {
+        public override void Init() {
             Intensity = 0;
 
             _timer = new Timer(100);

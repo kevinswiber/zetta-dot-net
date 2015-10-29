@@ -5,7 +5,7 @@ using Zetta.Core;
 
 namespace Zetta.Example {
     public class LEDScout : Scout {
-        public override async Task Initialize() {
+        public override async Task Init() {
             var results = await Server.Find<LED>("where type=\"led\"");
 
             if (results.Count() > 0) {

@@ -7,19 +7,19 @@ namespace Zetta.Core {
         private Func<object, Task<object>> _discover;
         private Func<object, Task<object>> _provision;
 
-        public abstract Task Initialize();
+        public abstract Task Init();
 
         public async Task Provision<T>(T device) where T : Device {
             device.Server = Server;
             EnsureType(device);
-            device.Initialize();
+            device.Init();
             await _provision(DevicePayloadFactory.Create(device));
         }
 
         public async Task Discover<T>(T device) where T : Device {
             device.Server = Server;
             EnsureType(device);
-            device.Initialize();
+            device.Init();
             await _discover(DevicePayloadFactory.Create(device));
         }
 

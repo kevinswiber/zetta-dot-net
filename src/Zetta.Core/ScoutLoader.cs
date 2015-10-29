@@ -23,7 +23,7 @@ namespace Zetta.Core {
         public async Task<ScoutLoader> Use<T>(T scout) where T : Scout {
             Setup(scout);
 
-            await scout.Initialize();
+            await scout.Init();
 
             return this;
         }
