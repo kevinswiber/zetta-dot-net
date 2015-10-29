@@ -49,11 +49,7 @@ namespace Zetta.Core {
             _observe.Invoke(queryPayload).Wait();
         }
 
-        public class IdentityDevice : Device {
-            public override void Initialize() {
-                // do nothing
-            }
-        }
+        public class IdentityDevice : Device { }
 
         public void Observe<T1, T2>(dynamic query, Action<T1, T2> callback)
             where T1 : Device

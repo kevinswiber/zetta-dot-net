@@ -10,10 +10,6 @@ namespace Zetta.Core.Tests {
     public class DeviceProxyTests {
         public class Dummy : Device {
             public virtual int Value { get; set; }
-
-            public override void Initialize() {
-                // do nothing
-            }
         }
 
         [Test]

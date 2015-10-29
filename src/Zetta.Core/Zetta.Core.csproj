@@ -39,6 +39,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IInitializable.cs" />
     <Compile Include="Interop\CommandBus.cs" />
     <Compile Include="Interop\Commands\SaveCommand.cs" />
     <Compile Include="Interop\Commands\SetPropertyCommand.cs" />

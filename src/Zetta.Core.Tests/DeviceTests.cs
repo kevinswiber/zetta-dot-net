@@ -8,9 +8,8 @@ namespace Zetta.Core.Tests {
     [TestFixture]
     public class DeviceTests {
         public class Dummy : Device {
-            public virtual int Value { get; set; }
 
-            public override void Initialize() {
+            public Dummy() {
                 State = "ready";
 
                 When("ready", allow: new[] { "start", "stop" });
@@ -70,6 +69,8 @@ namespace Zetta.Core.Tests {
                     new Field { Name = "sixth", Type = FieldType.Number }
                 });
             }
+
+            public virtual int Value { get; set; }
         }
 
         [Test]

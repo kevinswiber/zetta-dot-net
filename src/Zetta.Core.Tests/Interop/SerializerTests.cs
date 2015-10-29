@@ -8,7 +8,7 @@ namespace Zetta.Core.Tests.Interop {
     [TestFixture]
     public class SerializerTests {
         public class Dummy : Device {
-            public override void Initialize() {
+            public Dummy() {
                 Type = "dummy";
             }
 
