@@ -32,15 +32,13 @@ namespace Zetta.Core {
             _available = func;
         }
 
-        public async Task<bool> Available(string transition) {
-            return await _available.Invoke(transition);
-            /*
+        public bool IsAvailable(string transition) {
+            //return await _available.Invoke(transition);
             var isAvailable = Allowed[State].Any((availableTransition) => {
                 return availableTransition == transition;
             });
 
             return isAvailable;
-            */
         }
 
         public void SetCallFunction(Func<string, Task> func) {

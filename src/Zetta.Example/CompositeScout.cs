@@ -15,9 +15,9 @@ namespace Zetta.Example {
                 stream.Subscribe(async (obj) => {
                     var data = (double)obj.Data;
 
-                    if (data > 1.0d && await led.Available("turn-on")) {
+                    if (data > 1.0d && led.IsAvailable("turn-on")) {
                         await led.Call("turn-on");
-                    } else if (data <= 1.0d && await led.Available("turn-off")) {
+                    } else if (data <= 1.0d && led.IsAvailable("turn-off")) {
                         await led.Call("turn-off");
                     }
                 });
