@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using Zetta.Core.Interop;
 using Zetta.Core.Interop.Commands;
@@ -7,6 +8,9 @@ namespace Zetta.Core.Tests {
     [TestFixture]
     public class SetterInterceptorTests {
         public class Dummy : Device {
+            public override void Initialize() {
+                // do nothing
+            }
             public virtual int Value { get; set; }
         }
 

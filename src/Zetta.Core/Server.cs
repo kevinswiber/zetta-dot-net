@@ -50,6 +50,9 @@ namespace Zetta.Core {
         }
 
         public class IdentityDevice : Device {
+            public override void Initialize() {
+                // do nothing
+            }
         }
 
         public void Observe<T1, T2>(dynamic query, Action<T1, T2> callback)

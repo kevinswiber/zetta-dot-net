@@ -3,7 +3,7 @@ using Zetta.Core;
 
 namespace Zetta.Example {
     public class Display : Device {
-        public Display() {
+        public override void Initialize() {
             State = "ready";
 
             When("ready", allow: "change");

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using Zetta.Core.Interop;
@@ -7,7 +8,7 @@ namespace Zetta.Core.Tests.Interop {
     [TestFixture]
     public class SerializerTests {
         public class Dummy : Device {
-            public Dummy() {
+            public override void Initialize() {
                 Type = "dummy";
             }
 

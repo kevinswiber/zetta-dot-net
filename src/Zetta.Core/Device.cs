@@ -20,6 +20,8 @@ namespace Zetta.Core {
             Transitions = new Dictionary<string, TransitionValue>();
         }
 
+        public abstract void Initialize();
+
         protected void When(string state, string[] allow) {
             Allowed.Add(state, allow);
         }
