@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Zetta.Example {
     public class DisplayScout : Scout {
-        public override async Task Init() {
+        public override async Task Initialize() {
             var results = await Server.Find<Display>("where type=\"display\"");
 
             if (results.Count() > 0) {

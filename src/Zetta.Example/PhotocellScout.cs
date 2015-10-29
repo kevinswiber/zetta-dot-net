@@ -5,7 +5,7 @@ using Zetta.Core;
 
 namespace Zetta.Example {
     public class PhotocellScout : Scout {
-        public override async Task Init() {
+        public override async Task Initialize() {
             var results = await Server.Find<Photocell>("where type=\"photocell\"");
 
             if (results.Count() > 0) {

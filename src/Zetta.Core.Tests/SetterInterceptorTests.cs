@@ -8,7 +8,7 @@ namespace Zetta.Core.Tests {
     [TestFixture]
     public class SetterInterceptorTests {
         public class Dummy : Device {
-            public override void Init() {
+            public override void Initialize() {
                 // do nothing
             }
             public virtual int Value { get; set; }

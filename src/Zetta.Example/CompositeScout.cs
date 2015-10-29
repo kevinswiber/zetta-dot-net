@@ -7,7 +7,7 @@ using Zetta.Core;
 
 namespace Zetta.Example {
     public class CompositeScout : Scout {
-        public override async Task Init() {
+        public override async Task Initialize() {
             var queries = new[] { new { type = "led" }, new { type = "photocell" } };
             Server.Observe<LED, Photocell>(queries, async (led, photocell) => {
                 var stream = await photocell.CreateReadStream("intensity");

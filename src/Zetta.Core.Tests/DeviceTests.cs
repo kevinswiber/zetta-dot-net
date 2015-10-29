@@ -10,7 +10,7 @@ namespace Zetta.Core.Tests {
         public class Dummy : Device {
             public virtual int Value { get; set; }
 
-            public override void Init() {
+            public override void Initialize() {
                 State = "ready";
 
                 When("ready", allow: new[] { "start", "stop" });

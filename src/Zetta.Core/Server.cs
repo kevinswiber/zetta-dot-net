@@ -50,7 +50,7 @@ namespace Zetta.Core {
         }
 
         public class IdentityDevice : Device {
-            public override void Init() {
+            public override void Initialize() {
                 // do nothing
             }
         }
