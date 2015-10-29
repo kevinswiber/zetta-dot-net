@@ -28,43 +28,15 @@ namespace Zetta.Core.Interop {
         }
 
         public static IEnumerable<T> DeserializeArray<T>(string json) where T : Device {
-            return JsonConvert.DeserializeObject<IEnumerable<T>>(json, _settings)
-                .Select((device) => DeviceProxy.InterceptDevice(device))
-                .ToArray().AsEnumerable();
-
-            // TODO: Remove old code.  Don't think it's needed anymore.
-            //       The below code deserializes directly into a proxy
-            //       instead of the above, which a) deserializes into a
-            //       normal device type and then b) wraps that device
-            //       in a proxy.
-
-            /*var propertyMap = typeof(T).GetProperties()
-                .Select((prop) => prop.Name)
-                .ToDictionary(Resolver.GetResolvedPropertyName);
-
-            var objects = JArray.Parse(json).Children<JObject>();
-            var deserialized = objects.Select((obj) => {
-                var device = DeviceProxy.Create<T>();
-                obj.Properties().ToList().ForEach((prop) => {
-                    var name = prop.Name;
-                    if (propertyMap.ContainsKey(name)) {
-                        var clrPropertyName = propertyMap[name];
-                        var clrProperty = typeof(T).GetProperty(clrPropertyName);
-
-                        // TODO: Make this recursive through sub-objects, arrays.
-                        var savedValue = Convert.ChangeType(prop.Value, clrProperty.PropertyType);
-                        if (prop.Value.Type == JTokenType.Null) {
-                            savedValue = null;
-                        }
-
-                        clrProperty.SetValue(device, savedValue);
-                    }
-                });
-
-                return device;
-            }).ToArray();
-
-            return deserialized.AsEnumerable();*/
+            var t = DeviceProxy.GetInterceptedType<T>();
+            var ien = typeof(IEnumerable<>);
+            var conversionType = ien.MakeGenericType(t);
+            var deserialized = JsonConvert.DeserializeObject(json, conversionType);
+            var enumerable = (IEnumerable<T>)deserialized;
+            return enumerable.Select((d) => {
+                t.GetField("__interceptors").SetValue(d, new[] { new SetterInterceptor() });
+                return d;
+            }).ToArray().AsEnumerable();
         }
 
         public static IEnumerable<Device> DeserializeArray(string json, Type[] types, int length) {

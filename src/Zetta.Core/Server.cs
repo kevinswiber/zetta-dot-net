@@ -59,13 +59,9 @@ namespace Zetta.Core {
             queryPayload.Query = query;
             queryPayload.Callback = async (input) => {
                 var devices = Serializer.DeserializeArray((string)input, new[] { typeof(IdentityDevice), typeof(IdentityDevice) }, 2).ToArray();
-                /*foreach (Device d in devices) {
-                    await Prepare(d);
-                }*/
                 var first = MemoryRegistry.Instance.Get<T1>(devices[0].Id);
                 var second = MemoryRegistry.Instance.Get<T2>(devices[1].Id);
                 callback.Invoke(first, second);
-                //callback.Invoke((T1)devices[0], (T2)devices[1]);
                 return await Task.FromResult<object>(null);
             };
 
