@@ -24,8 +24,16 @@ namespace Zetta.Core {
 
         public async Task<IEnumerable<T>> Find<T>(string query) where T : Device {
             var results = (string)await _find(query);
+            var deserialized = Serializer.DeserializeArray<T>(results);
 
-            return Serializer.DeserializeArray<T>(results);
+            foreach (var d in deserialized) {
+                if (!MemoryRegistry.Instance.Contains(d)) {
+                    await Prepare(d);
+                    MemoryRegistry.Instance.Save(d);
+                }
+            }
+
+            return deserialized.Select((d) => (T)MemoryRegistry.Instance.Get(d.Id));
         }
 
         public void Observe<T>(dynamic query, Action<T> callback) where T : Device {
@@ -33,12 +41,15 @@ namespace Zetta.Core {
             queryPayload.Query = query;
             queryPayload.Callback = (input) => {
                 var device = Serializer.DeserializeArray<T>((string)input).First();
-                Prepare(device);
+                Prepare(device).Wait();
                 callback.Invoke(device);
                 return Task.FromResult<object>(null);
             };
 
             _observe.Invoke(queryPayload).Wait();
+        }
+
+        public class IdentityDevice : Device {
         }
 
         public void Observe<T1, T2>(dynamic query, Action<T1, T2> callback)
@@ -47,18 +58,21 @@ namespace Zetta.Core {
             var queryPayload = new QueryPayload();
             queryPayload.Query = query;
             queryPayload.Callback = async (input) => {
-                var devices = Serializer.DeserializeArray((string)input, new[] { typeof(T1), typeof(T2) }, 2).ToArray();
-                foreach (Device d in devices) {
+                var devices = Serializer.DeserializeArray((string)input, new[] { typeof(IdentityDevice), typeof(IdentityDevice) }, 2).ToArray();
+                /*foreach (Device d in devices) {
                     await Prepare(d);
-                }
-                callback.Invoke((T1)devices[0], (T2)devices[1]);
-                return Task.FromResult<object>(null);
+                }*/
+                var first = MemoryRegistry.Instance.Get<T1>(devices[0].Id);
+                var second = MemoryRegistry.Instance.Get<T2>(devices[1].Id);
+                callback.Invoke(first, second);
+                //callback.Invoke((T1)devices[0], (T2)devices[1]);
+                return await Task.FromResult<object>(null);
             };
 
             _observe.Invoke(queryPayload).Wait();
         }
 
-        private async Task Prepare<T>(T device) where T : Device {
+        public async Task Prepare<T>(T device) where T : Device {
             await _prepare.Invoke(DevicePayloadFactory.Create(device));
         }
     }

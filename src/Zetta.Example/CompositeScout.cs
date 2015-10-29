@@ -11,18 +11,19 @@ namespace Zetta.Example {
             var queries = new[] { new { type = "led" }, new { type = "photocell" } };
             Server.Observe<LED, Photocell>(queries, async (led, photocell) => {
                 var stream = await photocell.CreateReadStream("intensity");
-                stream.Subscribe((obj) => {
-                    var data = (decimal)obj.Data;
 
-                    if (data > 1.0m) {
-                        Console.WriteLine("on");
-                    } else {
-                        Console.WriteLine("off");
+                stream.Subscribe(async (obj) => {
+                    var data = (double)obj.Data;
+
+                    if (data > 1.0d && await led.Available("turn-on")) {
+                        await led.Call("turn-on");
+                    } else if (data <= 1.0d && await led.Available("turn-off")) {
+                        await led.Call("turn-off");
                     }
                 });
             });
 
-            await Task.FromResult(false);
+            await Task.FromResult(0);
         }
     }
 }

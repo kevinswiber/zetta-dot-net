@@ -15,8 +15,10 @@ namespace Zetta.Core.Interop {
             payload.Transitions = device.Transitions;
 
             payload.SetId = async (dynamic input) => {
-                return await Task.Run(() => {
+                return await Task.Run(async () => {
                     device.Id = (string)input;
+                    await device.Prepare();
+                    MemoryRegistry.Instance.Save(device);
                     return Create(device);
                 });
             };
@@ -33,6 +35,29 @@ namespace Zetta.Core.Interop {
                     await func.Invoke(fnInput);
 
                     return stream;
+                });
+                return await Task.FromResult(0);
+            };
+
+            payload.SetAvailableFunction = async (dynamic input) => {
+                var func = (Func<object, Task<object>>)input.fn;
+                device.SetAvailableFunction(async (transition) => {
+                    return (bool)await func.Invoke(new { transition = transition });
+                });
+                return await Task.FromResult(0);
+            };
+
+            payload.SetCallFunction = async (dynamic input) => {
+                var func = (Func<object, Task<object>>)input.fn;
+                device.SetCallFunction(async (transition) => {
+                    try {
+                        //Console.WriteLine("Invoking transition: {0}", transition);
+                        await func.Invoke(new { transition = transition });
+                    } catch (Exception ex) {
+                        if (ex.Message.StartsWith("Error: Machine cannot use transition")) {
+                            throw new InvalidOperationException(ex.Message);
+                        }
+                    }
                 });
                 return await Task.FromResult(0);
             };

@@ -52,11 +52,40 @@ DotNetScout.prototype.init = function(next) {
       },
       prepare: function (payload, callback) {
         payload.properties = JSON.parse(payload.Properties);
-        var machine = self.server._jsDevices[payload.properties.id];
+
+        payload.SetAvailableFunction({
+          fn: function (obj, cb) {
+            var machine = self.server._jsDevices[payload.properties.id];
+            cb(null, machine.available(obj.transition));
+          }
+        }, function (err) {
+          if (err) {
+            console.log('error calling available:', err);
+          }
+        });
+
+        payload.SetCallFunction({
+          fn: function (obj, cb) {
+            var machine = self.server._jsDevices[payload.properties.id];
+            var transition = obj.transition;
+            machine.call(transition, function (err) {
+              if (err) {
+                console.log(err);
+              }
+              cb(err);
+            });
+          }
+        }, function(err) {
+          if (err) {
+            console.log('error calling call:', err);
+          }
+        });
+
         payload.SetCreateReadStream({
           fn: function (obj, cb) {
             var name = obj.name;
             var onData = obj.onData;
+            var machine = self.server._jsDevices[payload.properties.id];
 
             setImmediate(function() {
               var stream = machine.createReadStream(name);
@@ -99,7 +128,7 @@ DotNetScout.prototype.init = function(next) {
           return;
         }
 
-        payload.SetCreateReadStream({
+        /*payload.SetCreateReadStream({
           fn: function (name, onData) {
             var stream = machine.createReadStream(name);
             stream.onData(function (data) {
@@ -108,6 +137,36 @@ DotNetScout.prototype.init = function(next) {
           }, function (err) {
             if (err) {
             }
+          }
+        }, function (err) {
+          if (err) {
+            callback(err);
+          } else {
+            callback();
+          }
+        });*/
+
+        payload.SetCreateReadStream({
+          fn: function (obj, cb) {
+            var name = obj.name;
+            var onData = obj.onData;
+
+            setImmediate(function() {
+              var stream = machine.createReadStream(name);
+              stream.on('data', function (data) {
+                onData(JSON.stringify(data));
+              });
+              stream.resume();
+            });
+            if (cb) {
+              cb();
+            }
+          }, function (err) {
+            if (err) {
+              callback(err);
+              return;
+            }
+            callback();
           }
         }, function (err) {
           if (err) {
@@ -129,15 +188,26 @@ DotNetScout.prototype.init = function(next) {
       });
 
       payload.SetCreateReadStream({
-        fn: function (name, onData) {
-          var stream = machine.createReadStream(name);
-          stream.onData(function (data) {
-            onData(JSON.stringify(data));
+        fn: function (obj, cb) {
+          var name = obj.name;
+          var onData = obj.onData;
+
+          setImmediate(function() {
+            var stream = machine.createReadStream(name);
+            stream.on('data', function (data) {
+              onData(JSON.stringify(data));
+            });
+            stream.resume();
           });
+          if (cb) {
+            cb();
+          }
         }, function (err) {
           if (err) {
-            console.log('error setting create read stream function:', err);
+            callback(err);
+            return;
           }
+          callback();
         }
       }, function (err) {
         if (err) {

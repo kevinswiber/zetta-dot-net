@@ -5,11 +5,14 @@ using Newtonsoft.Json;
 using Zetta.Core.Interop;
 using Zetta.Core.Interop.Commands;
 using System.IO;
+using System.Linq;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
     public abstract class Device {
         private Func<string, Task<ObjectStream>> _createReadStream;
+        private Func<string, Task> _call;
+        private Func<string, Task<bool>> _available;
 
         public Device() {
             State = null;
@@ -23,6 +26,33 @@ namespace Zetta.Core {
 
         protected void When(string state, string allow) {
             When(state, new string[] { allow });
+        }
+
+        public void SetAvailableFunction(Func<string, Task<bool>> func) {
+            _available = func;
+        }
+
+        public async Task<bool> Available(string transition) {
+            return await _available.Invoke(transition);
+            /*
+            var isAvailable = Allowed[State].Any((availableTransition) => {
+                return availableTransition == transition;
+            });
+
+            return isAvailable;
+            */
+        }
+
+        public void SetCallFunction(Func<string, Task> func) {
+            _call = func;
+        }
+
+        public async Task Call(string transition) {
+            await _call(transition);
+        }
+
+        public async Task Prepare() {
+            await Server.Prepare(this);
         }
 
         public async Task Save() {
@@ -182,5 +212,7 @@ namespace Zetta.Core {
         public IDictionary<string, string[]> Allowed { get; set; }
         [JsonIgnore]
         public IDictionary<string, TransitionValue> Transitions { get; set; }
+        [JsonIgnore]
+        public Server Server;
     }
 }
