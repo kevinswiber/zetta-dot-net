@@ -15,8 +15,10 @@ namespace Zetta.Core.Interop {
             payload.Transitions = device.Transitions;
 
             payload.SetId = async (dynamic input) => {
-                return await Task.Run(() => {
+                return await Task.Run(async () => {
                     device.Id = (string)input;
+                    await device.Prepare();
+                    MemoryRegistry.Instance.Save(device);
                     return Create(device);
                 });
             };

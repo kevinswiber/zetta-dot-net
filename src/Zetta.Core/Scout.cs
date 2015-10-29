@@ -10,11 +10,13 @@ namespace Zetta.Core {
         public abstract Task Initialize();
 
         public async Task Provision<T>(T device) where T : Device {
+            device.Server = Server;
             EnsureType(device);
             await _provision(DevicePayloadFactory.Create(device));
         }
 
         public async Task Discover<T>(T device) where T : Device {
+            device.Server = Server;
             EnsureType(device);
             await _discover(DevicePayloadFactory.Create(device));
         }

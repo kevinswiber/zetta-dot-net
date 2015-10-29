@@ -11,13 +11,11 @@ namespace Zetta.Example {
             When("off", allow: "turn-on");
 
             Map("turn-on", async () => {
-                Console.WriteLine("Changing state to on");
                 State = "on";
                 await Save();
             });
 
             Map("turn-off", async () => {
-                Console.WriteLine("Changing state to off");
                 State = "off";
                 await Save();
             });

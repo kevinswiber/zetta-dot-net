@@ -33,13 +33,14 @@ namespace Zetta.Core {
         }
 
         public async Task<bool> Available(string transition) {
-            //return await _available.Invoke(transition);
+            return await _available.Invoke(transition);
+            /*
             var isAvailable = Allowed[State].Any((availableTransition) => {
                 return availableTransition == transition;
             });
 
-            Console.WriteLine("Is {0} available when state is {1}?: {2}", transition, State, isAvailable);
             return isAvailable;
+            */
         }
 
         public void SetCallFunction(Func<string, Task> func) {
@@ -48,6 +49,10 @@ namespace Zetta.Core {
 
         public async Task Call(string transition) {
             await _call(transition);
+        }
+
+        public async Task Prepare() {
+            await Server.Prepare(this);
         }
 
         public async Task Save() {
@@ -207,5 +212,7 @@ namespace Zetta.Core {
         public IDictionary<string, string[]> Allowed { get; set; }
         [JsonIgnore]
         public IDictionary<string, TransitionValue> Transitions { get; set; }
+        [JsonIgnore]
+        public Server Server;
     }
 }

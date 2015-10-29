@@ -10,7 +10,7 @@ namespace Zetta.Example {
         public Photocell() {
             Intensity = 0;
 
-            _timer = new Timer(500);
+            _timer = new Timer(1000);
             _timer.Enabled = true;
             _timer.Elapsed += (object sender, ElapsedEventArgs e) => {
                 Intensity = Math.Sin(_counter * (Math.PI / 180)) + 1.0;

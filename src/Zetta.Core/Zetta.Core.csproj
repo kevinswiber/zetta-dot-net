@@ -48,6 +48,7 @@
     <Compile Include="Interop\QueryPayload.cs" />
     <Compile Include="Interop\Serializer.cs" />
     <Compile Include="Interop\ZettaInteropContractResolver.cs" />
+    <Compile Include="MemoryRegistry.cs" />
     <Compile Include="ObjectStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
