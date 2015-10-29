@@ -18,6 +18,7 @@ namespace Zetta.Core.Interop {
                 return await Task.Run(async () => {
                     device.Id = (string)input;
                     await device.Prepare();
+                    device.Initialize();
                     MemoryRegistry.Instance.Save(device);
                     return Create(device);
                 });

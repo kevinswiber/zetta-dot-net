@@ -29,6 +29,7 @@ namespace Zetta.Core {
             foreach (var d in deserialized) {
                 if (!MemoryRegistry.Instance.Contains(d)) {
                     await Prepare(d);
+                    d.Initialize();
                     MemoryRegistry.Instance.Save(d);
                 }
             }
@@ -42,6 +43,7 @@ namespace Zetta.Core {
             queryPayload.Callback = (input) => {
                 var device = Serializer.DeserializeArray<T>((string)input).First();
                 Prepare(device).Wait();
+                device.Initialize();
                 callback.Invoke(device);
                 return Task.FromResult<object>(null);
             };
