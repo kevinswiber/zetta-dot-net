@@ -39,11 +39,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppLoader.cs" />
     <Compile Include="IInitializable.cs" />
+    <Compile Include="IInitializableAsync.cs" />
     <Compile Include="Interop\CommandBus.cs" />
     <Compile Include="Interop\Commands\SaveCommand.cs" />
     <Compile Include="Interop\Commands\SetPropertyCommand.cs" />
     <Compile Include="Interop\DeviceConverter.cs" />
+    <Compile Include="IApp.cs" />
     <Compile Include="Interop\ICommand.cs" />
     <Compile Include="Interop\DevicePayload.cs" />
     <Compile Include="Interop\DevicePayloadFactory.cs" />
@@ -64,6 +67,7 @@
     <Compile Include="DeviceProxy.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="Field.cs" />
+    <Compile Include="Bootstrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

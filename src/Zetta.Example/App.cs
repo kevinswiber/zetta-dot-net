@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Zetta.Core;
+﻿using Zetta.Core;
 
 namespace Zetta.Example {
-    public class CompositeScout : Scout {
-        public override async Task Initialize() {
-            var queries = new[] { new { type = "led" }, new { type = "photocell" } };
-            Server.Observe<LED, Photocell>(queries, async (led, photocell) => {
+    public class App : IApp {
+        public void Invoke(Server server) {
+            var queries = new[] {
+                new { type = "led" },
+                new { type = "photocell" }
+            };
+
+            server.Observe<LED, Photocell>(queries, async (led, photocell) => {
                 var stream = await photocell.CreateReadStream("intensity");
 
                 stream.Subscribe(async (obj) => {
@@ -22,8 +21,6 @@ namespace Zetta.Example {
                     }
                 });
             });
-
-            await Task.FromResult(0);
         }
     }
 }

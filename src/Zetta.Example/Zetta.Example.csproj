@@ -42,7 +42,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompositeScout.cs" />
+    <Compile Include="Alarm.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Buzzer.cs" />
+    <Compile Include="BuzzerScout.cs" />
+    <Compile Include="AlarmScout.cs" />
+    <Compile Include="MicrophoneScout.cs" />
+    <Compile Include="Microphone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="LED.cs" />

@@ -13,7 +13,9 @@ namespace Zetta.Core {
             device.Server = Server;
             EnsureType(device);
 
-            if (device is IInitializable) {
+            if (device is IInitializableAsync) {
+                await ((IInitializableAsync)device).Initialize();
+            } else if (device is IInitializable) {
                 ((IInitializable)device).Initialize();
             }
 
@@ -24,7 +26,9 @@ namespace Zetta.Core {
             device.Server = Server;
             EnsureType(device);
 
-            if (device is IInitializable) {
+            if (device is IInitializableAsync) {
+                await ((IInitializableAsync)device).Initialize();
+            } else if (device is IInitializable) {
                 ((IInitializable)device).Initialize();
             }
 
