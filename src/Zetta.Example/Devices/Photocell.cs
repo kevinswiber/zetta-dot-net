@@ -2,7 +2,7 @@ using System;
 using System.Timers;
 using Zetta.Core;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Devices {
     public class Photocell : Device, IInitializable {
         private Timer _timer = new Timer(100);
         private int _counter = 0;

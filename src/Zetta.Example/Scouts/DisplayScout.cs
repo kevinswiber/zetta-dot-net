@@ -1,9 +1,9 @@
-﻿using System;
-using Zetta.Core;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Linq;
+using Zetta.Core;
+using Zetta.Example.Devices;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Scouts {
     public class DisplayScout : Scout {
         public override async Task Initialize() {
             var results = await Server.Find<Display>("where type=\"display\"");

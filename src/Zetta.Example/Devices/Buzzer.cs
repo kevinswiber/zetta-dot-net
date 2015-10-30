@@ -1,6 +1,6 @@
 ﻿using Zetta.Core;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Devices {
     public class Buzzer : Device {
         public Buzzer() {
             State = "silent";

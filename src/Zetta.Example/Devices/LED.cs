@@ -2,7 +2,7 @@
 using Zetta.Core;
 using System.Threading.Tasks;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Devices {
     public class LED : Device {
         public LED() {
             State = "off";

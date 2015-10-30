@@ -42,21 +42,21 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alarm.cs" />
-    <Compile Include="App.cs" />
-    <Compile Include="Buzzer.cs" />
-    <Compile Include="BuzzerScout.cs" />
-    <Compile Include="AlarmScout.cs" />
-    <Compile Include="MicrophoneScout.cs" />
-    <Compile Include="Microphone.cs" />
+    <Compile Include="Devices\Alarm.cs" />
+    <Compile Include="Apps\App.cs" />
+    <Compile Include="Devices\Buzzer.cs" />
+    <Compile Include="Scouts\BuzzerScout.cs" />
+    <Compile Include="Scouts\AlarmScout.cs" />
+    <Compile Include="Scouts\MicrophoneScout.cs" />
+    <Compile Include="Devices\Microphone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="LED.cs" />
-    <Compile Include="LEDScout.cs" />
-    <Compile Include="PhotocellScout.cs" />
-    <Compile Include="Photocell.cs" />
-    <Compile Include="DisplayScout.cs" />
-    <Compile Include="Display.cs" />
+    <Compile Include="Devices\LED.cs" />
+    <Compile Include="Scouts\LEDScout.cs" />
+    <Compile Include="Scouts\PhotocellScout.cs" />
+    <Compile Include="Devices\Photocell.cs" />
+    <Compile Include="Scouts\DisplayScout.cs" />
+    <Compile Include="Devices\Display.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Zetta.Core;
 using Zetta.Core.Interop;
+using Zetta.Example.Apps;
+using Zetta.Example.Scouts;
 
 namespace Zetta.Example {
     public class Startup {

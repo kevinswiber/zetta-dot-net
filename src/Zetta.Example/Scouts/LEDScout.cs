@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Zetta.Core;
+using Zetta.Example.Devices;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Scouts {
     public class LEDScout : Scout {
         public override async Task Initialize() {
             var results = await Server.Find<LED>("where type=\"led\"");

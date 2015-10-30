@@ -1,6 +1,7 @@
 ﻿using Zetta.Core;
+using Zetta.Example.Devices;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Apps {
     public class App : IApp {
         public void Invoke(Server server) {
             var queries = new[] {

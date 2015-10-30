@@ -67,7 +67,6 @@
     <Compile Include="DeviceProxy.cs" />
     <Compile Include="FieldType.cs" />
     <Compile Include="Field.cs" />
-    <Compile Include="Bootstrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

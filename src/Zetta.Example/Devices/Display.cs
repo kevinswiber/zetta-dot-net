@@ -1,7 +1,7 @@
 ﻿using System;
 using Zetta.Core;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Devices {
     public class Display : Device {
         public Display() {
             State = "ready";

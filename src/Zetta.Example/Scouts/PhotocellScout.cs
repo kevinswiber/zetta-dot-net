@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Zetta.Core;
+using Zetta.Example.Devices;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Scouts {
     public class PhotocellScout : Scout {
         public override async Task Initialize() {
             var results = await Server.Find<Photocell>("where type=\"photocell\"");

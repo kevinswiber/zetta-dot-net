@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Zetta.Core;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Devices {
     public class Alarm : Device, IInitializableAsync {
         private Microphone _microphone;
         private Buzzer _buzzer;

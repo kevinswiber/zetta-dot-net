@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Zetta.Core;
+using Zetta.Example.Devices;
 
-namespace Zetta.Example {
+namespace Zetta.Example.Scouts {
     public class AlarmScout : Scout {
         public override async Task Initialize() {
             var queries = new[] { new { type = "microphone" }, new { type = "buzzer" } };
