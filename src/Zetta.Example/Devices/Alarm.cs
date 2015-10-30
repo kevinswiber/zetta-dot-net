@@ -17,6 +17,7 @@ namespace Zetta.Example.Devices {
 
             Map("arm", async () => {
                 State = "armed";
+
                 await Save();
             });
 
@@ -43,8 +44,6 @@ namespace Zetta.Example.Devices {
 
                 if (data > 1.0d && _buzzer.IsAvailable("start")) {
                     await _buzzer.Call("start");
-                } else if (data <= 1.0d && _buzzer.IsAvailable("stop")) {
-                    await _buzzer.Call("stop");
                 }
             });
         }

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppLoader.cs" />
+    <Compile Include="AssemblyLoader.cs" />
     <Compile Include="IInitializable.cs" />
     <Compile Include="IInitializableAsync.cs" />
     <Compile Include="Interop\CommandBus.cs" />

@@ -20,7 +20,7 @@ namespace Zetta.Core {
             _provisionFunction = (Func<object, Task<object>>)_input.provision;
         }
 
-        public async Task<ScoutLoader> Use<T>(T scout) where T : Scout {
+        public async Task<ScoutLoader> Use(Scout scout) {
             Setup(scout);
 
             await scout.Initialize();
