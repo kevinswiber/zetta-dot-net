@@ -19,7 +19,7 @@ DotNetScout.prototype.init = function(next) {
           if (err) {
             callback(err);
             return;
-          } 
+          }
 
           callback(null, JSON.stringify(results));
         });
@@ -40,8 +40,8 @@ DotNetScout.prototype.init = function(next) {
           query = self.server.where(payload.Query);
         }
 
-        self.server.observe(query, function () {
-          payload.Callback(JSON.stringify(Array.prototype.slice.call(arguments).map(function (d) { return d.properties(); })), function (err) {
+        self.server.observe(query, function() {
+          payload.Callback(JSON.stringify(Array.prototype.slice.call(arguments).map(function(d) { return d.properties(); })), function(err) {
             if (err) {
               console.error('Error calling observe callback:', err);
             }
@@ -50,25 +50,25 @@ DotNetScout.prototype.init = function(next) {
         });
         callback();
       },
-      prepare: function (payload, callback) {
+      prepare: function(payload, callback) {
         payload.properties = JSON.parse(payload.Properties);
 
         payload.SetAvailableFunction({
-          fn: function (obj, cb) {
+          fn: function(obj, cb) {
             var machine = self.server._jsDevices[payload.properties.id];
             cb(null, machine.available(obj.transition));
           }
-        }, function (err) {
+        }, function(err) {
           if (err) {
             console.log('error calling available:', err);
           }
         });
 
         payload.SetCallFunction({
-          fn: function (obj, cb) {
+          fn: function(obj, cb) {
             var machine = self.server._jsDevices[payload.properties.id];
             var transition = obj.transition;
-            machine.call(transition, function (err) {
+            machine.call(transition, function(err) {
               if (err) {
                 console.log(err);
               }
@@ -82,14 +82,14 @@ DotNetScout.prototype.init = function(next) {
         });
 
         payload.SetCreateReadStream({
-          fn: function (obj, cb) {
+          fn: function(obj, cb) {
             var name = obj.name;
             var onData = obj.onData;
             var machine = self.server._jsDevices[payload.properties.id];
 
             setImmediate(function() {
               var stream = machine.createReadStream(name);
-              stream.on('data', function (data) {
+              stream.on('data', function(data) {
                 onData(JSON.stringify(data));
               });
               stream.resume();
@@ -97,14 +97,14 @@ DotNetScout.prototype.init = function(next) {
             if (cb) {
               cb();
             }
-          }, function (err) {
+          }, function(err) {
             if (err) {
               callback(err);
               return;
             }
             callback();
           }
-        }, function (err) {
+        }, function(err) {
           if (err) {
             callback(err);
           } else {
@@ -122,23 +122,23 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      payload.SetId(machine.id, function (err) {
+      payload.SetId(machine.id, function(err) {
         if (err) {
           callback(err);
           return;
         }
 
         /*payload.SetCreateReadStream({
-          fn: function (name, onData) {
+          fn: function(name, onData) {
             var stream = machine.createReadStream(name);
-            stream.onData(function (data) {
+            stream.onData(function(data) {
               onData(JSON.stringify(data));
             });
-          }, function (err) {
+          }, function(err) {
             if (err) {
             }
           }
-        }, function (err) {
+        }, function(err) {
           if (err) {
             callback(err);
           } else {
@@ -147,13 +147,13 @@ DotNetScout.prototype.init = function(next) {
         });*/
 
         payload.SetCreateReadStream({
-          fn: function (obj, cb) {
+          fn: function(obj, cb) {
             var name = obj.name;
             var onData = obj.onData;
 
             setImmediate(function() {
               var stream = machine.createReadStream(name);
-              stream.on('data', function (data) {
+              stream.on('data', function(data) {
                 onData(JSON.stringify(data));
               });
               stream.resume();
@@ -161,14 +161,14 @@ DotNetScout.prototype.init = function(next) {
             if (cb) {
               cb();
             }
-          }, function (err) {
+          }, function(err) {
             if (err) {
               callback(err);
               return;
             }
             callback();
           }
-        }, function (err) {
+        }, function(err) {
           if (err) {
             callback(err);
           } else {
@@ -188,13 +188,13 @@ DotNetScout.prototype.init = function(next) {
       });
 
       payload.SetCreateReadStream({
-        fn: function (obj, cb) {
+        fn: function(obj, cb) {
           var name = obj.name;
           var onData = obj.onData;
 
           setImmediate(function() {
             var stream = machine.createReadStream(name);
-            stream.on('data', function (data) {
+            stream.on('data', function(data) {
               onData(JSON.stringify(data));
             });
             stream.resume();
@@ -202,14 +202,14 @@ DotNetScout.prototype.init = function(next) {
           if (cb) {
             cb();
           }
-        }, function (err) {
+        }, function(err) {
           if (err) {
             callback(err);
             return;
           }
           callback();
         }
-      }, function (err) {
+      }, function(err) {
         if (err) {
           callback(err);
         } else {
@@ -219,7 +219,7 @@ DotNetScout.prototype.init = function(next) {
 
       //callback();
     }
-  }
+  };
 
   this._interop(options, function(err, bus) {
     if (err) {
@@ -235,22 +235,21 @@ DotNetScout.prototype.init = function(next) {
 
         callback();
       }
-    }, function (err) {
+    }, function(err) {
       if (err) {
       }
     });
 
     bus.On({
       type: 'SaveCommand',
-      subscriber: function (command, callback) {
+      subscriber: function(command, callback) {
         var device = self.server._jsDevices[command.DeviceId];
         device.save(callback);
       }
-    }, function (err) {
+    }, function(err) {
       if (err) {
       }
     });
-
-    next();
   });
+  next();
 };
