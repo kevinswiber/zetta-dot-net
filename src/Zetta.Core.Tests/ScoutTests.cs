@@ -97,6 +97,10 @@ namespace Zetta.Core.Tests {
                 return Task.Run(() => (object)"[{\"id\":\"123\"}]");
             };
 
+            server.find = (i) => {
+                return Task.Run(() => (object)i);
+            };
+
             input.server = server;
 
             var loader = ScoutLoader.Create(input);

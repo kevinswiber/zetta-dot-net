@@ -43,6 +43,10 @@ namespace Zetta.Core.Tests {
                 return Task.Run(() => (object)"[{\"id\":\"1234\"}]");
             };
 
+            server.prepare = async (i) => {
+                return await Task.FromResult(0);
+            };
+
             input.server = server;
             input.provision = (obj) => Task.Run(() => {
                 hasRun = true;
