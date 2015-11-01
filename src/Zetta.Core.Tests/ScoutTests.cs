@@ -97,7 +97,7 @@ namespace Zetta.Core.Tests {
                 return Task.Run(() => (object)"[{\"id\":\"123\"}]");
             };
 
-            server.find = (i) => {
+            server.prepare = (i) => {
                 return Task.Run(() => (object)i);
             };
 
