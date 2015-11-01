@@ -90,6 +90,23 @@ namespace Zetta.Core.Tests.Interop {
 
         [Test]
         [Timeout(1000)]
+        public async Task CommandBus_Throws_On_Invalid_Command_String() {
+            Action test = () => {
+                var bus = new CommandBus();
+                bus.Subscribe("TestCommand", (cmd) => {
+                return null;
+
+                /*Assert.That(saveCommand.DeviceId, Is.EqualTo("1234"));
+                    bus.RemoveAllSubscriptions();
+                    return null;*/
+                });
+            };
+
+            Assert.That(new TestDelegate(test), Throws.Exception.With.Message.EqualTo("Command TestCommand does not exist."));
+        }
+
+        [Test]
+        [Timeout(1000)]
         public async Task CommandBus_Subscribes_With_On() {
             var bus = new CommandBus();
             var source = new TaskCompletionSource<bool>();
