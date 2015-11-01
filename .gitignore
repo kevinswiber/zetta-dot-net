@@ -9,3 +9,6 @@ obj
 *.user
 .vs
 packages
+coverage
+TestResult.xml
+results.xml
