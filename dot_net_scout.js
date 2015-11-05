@@ -122,29 +122,11 @@ DotNetScout.prototype.init = function(next) {
         machine[key] = payload.properties[key];
       });
 
-      payload.SetId(machine.id, function(err) {
+      payload.Prepare(null, function(err) {
         if (err) {
           callback(err);
           return;
         }
-
-        /*payload.SetCreateReadStream({
-          fn: function(name, onData) {
-            var stream = machine.createReadStream(name);
-            stream.onData(function(data) {
-              onData(JSON.stringify(data));
-            });
-          }, function(err) {
-            if (err) {
-            }
-          }
-        }, function(err) {
-          if (err) {
-            callback(err);
-          } else {
-            callback();
-          }
-        });*/
 
         payload.SetCreateReadStream({
           fn: function(obj, cb) {

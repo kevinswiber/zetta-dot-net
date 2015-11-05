@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Zetta.Core.Interop;
 using Zetta.Core.Interop.Commands;
-using System.IO;
 using System.Linq;
 
 namespace Zetta.Core {
@@ -66,13 +65,16 @@ namespace Zetta.Core {
             return _createReadStream.Invoke(name);
         }
 
-        public override int GetHashCode() {
+        /*public override int GetHashCode() {
             var code = !string.IsNullOrEmpty(Id) ? Id.GetHashCode() : base.GetHashCode();
             return code;
-        }
+        }*/
 
         public static T Create<T>(object[] args = null) where T : Device {
-            return DeviceProxy.Create<T>(args);
+            var device = DeviceProxy.Create<T>(args);
+            device.Id = Guid.NewGuid().ToString().ToLower();
+
+            return device;
         }
 
         protected void Map(string transition, TransitionValue transitionValue) {

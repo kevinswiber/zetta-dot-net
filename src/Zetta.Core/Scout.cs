@@ -20,13 +20,13 @@ namespace Zetta.Core {
             } else if (device is IInitializable) {
                 ((IInitializable)device).Initialize();
             }
-
-            MemoryRegistry.Instance.Save(device);
         }
 
         public async Task Discover<T>(T device) where T : Device {
             device.Server = Server;
             EnsureType(device);
+
+            MemoryRegistry.Instance.Save(device);
 
             await _discover(DevicePayloadFactory.Create(device));
 
@@ -35,8 +35,6 @@ namespace Zetta.Core {
             } else if (device is IInitializable) {
                 ((IInitializable)device).Initialize();
             }
-
-            MemoryRegistry.Instance.Save(device);
         }
 
         public void SetProvisionFunction(Func<object, Task<object>> provision) {
