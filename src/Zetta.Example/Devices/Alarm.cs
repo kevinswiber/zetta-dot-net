@@ -6,6 +6,8 @@ namespace Zetta.Example.Devices {
         private Microphone _microphone;
         private Buzzer _buzzer;
 
+        public Alarm() { }
+
         public Alarm(Microphone microphone, Buzzer buzzer) {
             _microphone = microphone;
             _buzzer = buzzer;
