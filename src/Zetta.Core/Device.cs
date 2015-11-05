@@ -65,11 +65,6 @@ namespace Zetta.Core {
             return _createReadStream.Invoke(name);
         }
 
-        /*public override int GetHashCode() {
-            var code = !string.IsNullOrEmpty(Id) ? Id.GetHashCode() : base.GetHashCode();
-            return code;
-        }*/
-
         public static T Create<T>(object[] args = null) where T : Device {
             var device = DeviceProxy.Create<T>(args);
             device.Id = Guid.NewGuid().ToString().ToLower();
