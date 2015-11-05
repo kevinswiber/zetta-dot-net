@@ -24,7 +24,11 @@ namespace Zetta.Core {
         }
 
         public void Save<T>(T device) where T : Device {
-            _registry.Add(device.Id, device);
+            if (_registry.ContainsKey(device.Id)) {
+                _registry[device.Id] = device;
+            } else {
+                _registry.Add(device.Id, device);
+            }
         }
 
         public static MemoryRegistry Instance {
