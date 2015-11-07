@@ -69,6 +69,6 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*" "C:\Program Files\nodejs\" /y</PostBuildEvent>
+    <PostBuildEvent Condition="$(OS) == 'Windows_NT'">xcopy "$(TargetDir)*" "C:\Program Files\nodejs\" /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
