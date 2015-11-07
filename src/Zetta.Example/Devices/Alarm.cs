@@ -20,7 +20,7 @@ namespace Zetta.Example.Devices {
             Map("arm", async () => {
                 State = "armed";
 
-                await Save();
+                await Done();
             });
 
             Map("disarm", async () => {
@@ -30,7 +30,7 @@ namespace Zetta.Example.Devices {
                     await _buzzer.Call("stop");
                 }
 
-                await Save();
+                await Done();
             });
         }
 
@@ -48,6 +48,8 @@ namespace Zetta.Example.Devices {
                     await _buzzer.Call("start");
                 }
             });
+
+            await Done();
         }
     }
 }

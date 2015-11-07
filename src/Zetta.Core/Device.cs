@@ -52,6 +52,12 @@ namespace Zetta.Core {
             await Server.Prepare(this);
         }
 
+        public async Task Done() {
+            var source = new TaskCompletionSource<object>();
+            source.SetResult(null);
+            await source.Task;
+        }
+
         public async Task Save() {
             var command = new SaveCommand(Id);
             await CommandBus.Instance.Publish(command);
