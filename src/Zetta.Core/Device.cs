@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Zetta.Core.Interop;
 using Zetta.Core.Interop.Commands;
 using System.Linq;
+using System.Threading;
 
 namespace Zetta.Core {
     [JsonObject(MemberSerialization.OptOut)]
@@ -53,7 +54,9 @@ namespace Zetta.Core {
         }
 
         public async Task Done() {
-            await Task.Run(() => { });
+            var task = new Task(() => { }, CancellationToken.None, TaskCreationOptions.AttachedToParent);
+            task.Start();
+            await task;
         }
 
         public async Task Save() {
