@@ -1,0 +1,17 @@
+{
+  "name": "example",
+  "private": true,
+  "version": "0.1.0",
+  "description": "An example of zetta-dot-net",
+  "main": "server.js",
+  "dependencies": {
+    "zetta": "^0.33.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Kevin Swiber <kswiber@gmail.com>",
+  "license": "MIT"
+}

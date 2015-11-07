@@ -1,0 +1,35 @@
+{
+  "name": "zetta-dot-net",
+  "version": "0.1.0",
+  "description": "Create Zetta.js scouts, device drivers, and apps using C#.",
+  "main": "dot_net_scout.js",
+  "dependencies": {
+    "edge": "^4.0.0",
+    "zetta-device": "^0.17.0",
+    "zetta-scout": "^0.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinswiber/zetta-dot-net.git"
+  },
+  "keywords": [
+    "zetta",
+    ".net",
+    "c#",
+    "apps",
+    "drivers",
+    "scouts",
+    "iot"
+  ],
+  "author": "Kevin Swiber <kswiber@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinswiber/zetta-dot-net/issues"
+  },
+  "homepage": "https://github.com/kevinswiber/zetta-dot-net#readme"
+}
