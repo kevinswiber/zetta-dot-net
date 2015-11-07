@@ -54,7 +54,8 @@ namespace Zetta.Core {
         }
 
         public async Task Done() {
-            var task = new Task(() => { }, CancellationToken.None, TaskCreationOptions.AttachedToParent);
+            Action noop = () => { };
+            var task = new Task(noop, CancellationToken.None, TaskCreationOptions.AttachedToParent);
             task.Start();
             await task;
         }
