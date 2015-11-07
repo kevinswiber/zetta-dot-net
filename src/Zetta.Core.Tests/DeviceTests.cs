@@ -17,22 +17,30 @@ namespace Zetta.Core.Tests {
                 When("stop", allow: "start");
 
                 Map("zero", async () => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 });
 
                 Map<int>("one", async (i) => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 }, new Field { Name = "first", Type = FieldType.Number });
 
                 Map<int, int>("two", async (i, j) => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 }, new Field[] {
                     new Field { Name = "first", Type = FieldType.Number },
                     new Field { Name = "second", Type = FieldType.Number }
                 });
 
                 Map<int, int, int>("three", async (i, j, k) => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 }, new Field[] {
                     new Field { Name = "first", Type = FieldType.Number },
                     new Field { Name = "second", Type = FieldType.Number },
@@ -40,7 +48,9 @@ namespace Zetta.Core.Tests {
                 });
 
                 Map<int, int, int, int>("four", async (i, j, k, l) => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 }, new Field[] {
                     new Field { Name = "first", Type = FieldType.Number },
                     new Field { Name = "second", Type = FieldType.Number },
@@ -49,7 +59,9 @@ namespace Zetta.Core.Tests {
                 });
 
                 Map<int, int, int, int, int>("five", async (i, j, k, l, m) => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 }, new Field[] {
                     new Field { Name = "first", Type = FieldType.Number },
                     new Field { Name = "second", Type = FieldType.Number },
@@ -59,7 +71,9 @@ namespace Zetta.Core.Tests {
                 });
 
                 Map<int, int, int, int, int, int>("six", async (i, j, k, l, m, n) => {
-                    await Task.Run(() => { return "Success"; });
+                    await Task.Run(() => {
+                        return "Success";
+                    });
                 }, new Field[] {
                     new Field { Name = "first", Type = FieldType.Number },
                     new Field { Name = "second", Type = FieldType.Number },
@@ -116,7 +130,7 @@ namespace Zetta.Core.Tests {
 
             await dummy.Save();
             await source.Task;
-        } 
+        }
 
         [Test]
         public void Map0_Populates_Transitions() {
@@ -207,17 +221,6 @@ namespace Zetta.Core.Tests {
 
             Assert.That(transitionValue.Handler, Is.Not.Null);
             Assert.That(transitionValue.Fields, Has.Length.EqualTo(6));
-        }
-
-        [Test]
-        public void Produces_Hash_Code_Based_On_Id_Value() {
-            var dummy1 = new Dummy();
-            var dummy2 = new Dummy();
-
-            dummy1.Id = "abcdefg";
-            dummy2.Id = "abcdefg";
-
-            Assert.That(dummy1.GetHashCode(), Is.EqualTo(dummy2.GetHashCode()));
         }
     }
 }

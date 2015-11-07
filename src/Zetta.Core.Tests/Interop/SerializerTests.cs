@@ -36,7 +36,7 @@ namespace Zetta.Core.Tests.Interop {
 
             var properties = obj.Properties().Select((p) => p.Name).ToArray();
 
-            Assert.That(properties, Has.Length.EqualTo(2)); // Type, Value
+            Assert.That(properties, Has.Length.EqualTo(3)); // Id, Type, Value
             Assert.That(properties, Has.Member("valueItem"));
             Assert.That(properties, Has.Member("type"));
         }
@@ -107,7 +107,7 @@ namespace Zetta.Core.Tests.Interop {
             device2.ValueItem = 2;
 
             var json = "[" + Serializer.Serialize(device1) + "," +
-                Serializer.Serialize(device2) + "]";
+                       Serializer.Serialize(device2) + "]";
 
             var arr = Serializer.DeserializeArray<Dummy>(json).ToArray();
 
