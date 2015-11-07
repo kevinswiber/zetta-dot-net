@@ -53,9 +53,7 @@ namespace Zetta.Core {
         }
 
         public async Task Done() {
-            var source = new TaskCompletionSource<object>();
-            source.SetResult(null);
-            await source.Task;
+            await Task.Run(() => { });
         }
 
         public async Task Save() {
