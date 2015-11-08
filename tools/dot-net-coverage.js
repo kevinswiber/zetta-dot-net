@@ -6,7 +6,7 @@ var colors = require('colors');
 var isMono = (os.platform() !== 'win32');
 
 if (isMono) {
-  console.error(".NET Code Coverage requires Windows.".red);
+  console.error("Error: dot-net-coverage requires a win32 operating system".red);
   return;
 }
 
