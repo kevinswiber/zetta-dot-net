@@ -1,6 +1,6 @@
 var os = require('os');
 var path = require('path');
-var spawn = require('child_process').spawn;
+var spawnSync = require('child_process').spawnSync;
 
 var isMono = (os.platform() !== 'win32');
 var config = process.env.DOT_NET_CONFIG || 'Debug';
@@ -24,4 +24,7 @@ if (isMono) {
   args.push(testAssemblyPath);
 }
 
-spawn(file, args, { env: process.env, stdio: 'inherit' });
+var buildPath = path.join(__dirname, 'dot-net-build.js');
+
+spawnSync("node", [buildPath], { env: process.env, stdio: 'inherit' });
+spawnSync(file, args, { env: process.env, stdio: 'inherit' });

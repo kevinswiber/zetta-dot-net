@@ -35,8 +35,9 @@ args.push('-targetargs:"' + testAssemblyPath + '"');
 args.push('-register:user');
 args.push('-filter:"+[Zetta*]* -[*Test*]*"');
 
-//console.log('"' + coverageRunnerPath + '"', args.join(' '));
-//spawn(file, args, { env: process.env, stdio: 'inherit' });
+var buildPath = path.join(__dirname, 'dot-net-build.js');
+execSync("node", [buildPath], { env: process.env, stdio: 'inherit' });
+
 execSync('"' + coverageRunnerPath + '" ' + args.join(' '), { env: process.env, stdio: 'inherit' });
 execSync('"' + reportGeneratorPath + '" -reports:results.xml -targetdir:.\\coverage');
 execSync('start .\\coverage\\index.htm');
