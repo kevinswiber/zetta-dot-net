@@ -12,6 +12,7 @@
     "colors": "^1.1.2"
   },
   "scripts": {
+    "dot-net-build": "node ./tools/dot-net-build.js",
     "dot-net-test": "node ./tools/dot-net-test.js",
     "dot-net-coverage": "node ./tools/dot-net-coverage.js",
     "test": "echo \"Error: no test specified\" && exit 1",
