@@ -8,9 +8,12 @@
     "zetta-device": "^0.17.0",
     "zetta-scout": "^0.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "colors": "^1.1.2"
+  },
   "scripts": {
     "dot-net-test": "node ./tools/dot-net-test.js",
+    "dot-net-coverage": "node ./tools/dot-net-coverage.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
