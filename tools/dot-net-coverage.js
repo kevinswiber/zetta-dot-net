@@ -1,6 +1,7 @@
 var os = require('os');
 var path = require('path');
 var execSync = require('child_process').execSync;
+var spawnSync = require('child_process').spawnSync;
 var colors = require('colors');
 
 var isMono = (os.platform() !== 'win32');
@@ -36,7 +37,7 @@ args.push('-register:user');
 args.push('-filter:"+[Zetta*]* -[*Test*]*"');
 
 var buildPath = path.join(__dirname, 'dot-net-build.js');
-execSync("node", [buildPath], { env: process.env, stdio: 'inherit' });
+spawnSync("node", [buildPath], { env: process.env, stdio: 'inherit' });
 
 execSync('"' + coverageRunnerPath + '" ' + args.join(' '), { env: process.env, stdio: 'inherit' });
 execSync('"' + reportGeneratorPath + '" -reports:results.xml -targetdir:.\\coverage');
