@@ -12,3 +12,5 @@ packages
 coverage
 TestResult.xml
 results.xml
+DotNetTestResult.xml
+DotNetTestResult.html

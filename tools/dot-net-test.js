@@ -12,19 +12,18 @@ var testRunnerPath = path.join(rootPath, 'src', 'packages',
 var testAssemblyPath = path.join(rootPath, 'src', 'Zetta.Core.Tests',
     'bin', config, 'Zetta.Core.Tests.dll');
 
-var file;
+var file = isMono ? 'mono' : testRunnerPath;
 var args = [];
 
 if (isMono) {
-  file = 'mono';
   args.push(testRunnerPath);
-  args.push(testAssemblyPath);
-} else {
-  file = testRunnerPath;
-  args.push(testAssemblyPath);
 }
+
+args.push(testAssemblyPath);
+args.push('--result=DotNetTestResult.xml');
+
 
 var buildPath = path.join(__dirname, 'dot-net-build.js');
 
-spawnSync("node", [buildPath], { env: process.env, stdio: 'inherit' });
+spawnSync('node', [buildPath], { env: process.env, stdio: 'inherit' });
 spawnSync(file, args, { env: process.env, stdio: 'inherit' });
