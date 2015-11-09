@@ -1,5 +1,6 @@
 var os = require('os');
 var path = require('path');
+var execSync = require('child_process').execSync;
 var spawnSync = require('child_process').spawnSync;
 
 var platform = os.platform();
@@ -28,5 +29,6 @@ spawnSync(file, args, { env: process.env, stdio: 'inherit' });
 if (platform === 'darwin') {
   spawnSync('open', ['DotNetTestResult.html']);
 } else if (platform === 'win32') {
-  spawnSync('start', ['DotNetTestResult.html']);
+console.log('spawning start');
+  execSync('start DotNetTestResult.html');
 }
