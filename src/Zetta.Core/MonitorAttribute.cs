@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Zetta {
+namespace Zetta.Core {
     [AttributeUsage(AttributeTargets.Property)]
     public class MonitorAttribute : Attribute {
         public MonitorAttribute() {
