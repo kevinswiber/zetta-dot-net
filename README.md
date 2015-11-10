@@ -66,7 +66,7 @@ Be sure to follow these instructions when setting up your environment:
 
 * [Scripting CLR from Nodej.s: What you need](https://github.com/tjanczuk/edge#what-you-need)
 
-### Setting up C#
+### Setting up C&#35;
 
 Install the Zetta.js Nuget package. [TBD]
 
