@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Zetta.Core.Interop;
 
@@ -47,6 +48,47 @@ namespace Zetta.Core {
             };
 
             _observe.Invoke(queryPayload).Wait();
+        }
+
+        public IObservable<T> Observe<T>(dynamic query) where T : Device {
+            return Observable.Create<T>((observer) => {
+                var queryPayload = new QueryPayload();
+                queryPayload.Query = query;
+                queryPayload.Callback = (input) => {
+                    try {
+                        var devices = Serializer.DeserializeArray((string)input, new[] { typeof(IdentityDevice) }, 1).ToArray();
+                        var first = MemoryRegistry.Instance.Get<T>(devices[0].Id);
+                        observer.OnNext(first);
+                    } catch(Exception ex) {
+                        observer.OnError(ex);
+                    }
+
+                    return Task.FromResult<object>(null);
+                };
+
+                _observe.Invoke(queryPayload).Wait();
+
+                return () => { /* handle dispose logic */ };
+            });
+        }
+
+        public IObservable<Device> Observe(dynamic query) {
+            return Observe<Device>(query);
+        }
+
+        public IObservable<IEnumerable<Device>> Observe(IEnumerable<dynamic> queries) {
+            IObservable<IEnumerable<Device>> seed = Observable.Return(new List<Device>());
+                
+            var observable = queries.Select((q) => (IObservable<Device>)Observe(q))
+                .Aggregate(seed, (accumulator, obs) => {
+                    return accumulator.Zip(obs, (first, second) => {
+                        var list = first.ToList();
+                        list.Add(second);
+                        return list;
+                    });
+                });
+
+            return observable;
         }
 
         public class IdentityDevice : Device { }
